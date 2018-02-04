@@ -1,5 +1,7 @@
 'use strict';
-
+var getAvatar = function (num) {
+  return 'img/avatars/user0' + num + '.png';
+};
 var DEFAULT_TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 function getRandomNumberBetween(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -9,19 +11,16 @@ function getAddress(x, y) {
 }
 function getRandomItemFromAnArray(arr) {
   Math.floor(Math.random() * arr.length);
-  // return arr.splice(item - 1, 1);
 }
 function getFeatures() {
   var arr = [];
-  var featuresLength = getRandomNumberBetween(0, FEATURES.length);
+  var featuresLength = getRandomNumberBetween(1, FEATURES.length);
   for (var i = 0; i < featuresLength; i++) {
     arr[i] = FEATURES[i];
   }
 }
 var AVATAR_WIDTH = 40;
 var AVATAR_HEIGHT = 40;
-var locationX = getRandomNumberBetween(300, 900);
-var locationY = getRandomNumberBetween(150, 500);
 var HOUSE_TYPE = ['flat', 'house', 'bungalo'];
 var TIMES = ['12:00', '13:00', '14:00'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -29,9 +28,11 @@ var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.g
 function getMainObject() {
   var offers = [];
   for (var i = 0; i < 8; i++) {
+    var locationX = getRandomNumberBetween(300, 900);
+    var locationY = getRandomNumberBetween(150, 500);
     offers[i] = {
       author: {
-        avatar: ''
+        avatar: getAvatar(i + 1),
       },
       offer: {
         title: getRandomItemFromAnArray(DEFAULT_TITLES),
@@ -62,20 +63,21 @@ function renderPin(pin) {
   var pinTemplate = document.querySelector('template').content;
   var pinElement = pinTemplate.cloneNode(true);
   var fragment = document.createDocumentFragment();
-  var buttonTeamplate = document.querySelector('.map__pin');
-  var buttonStyle = getComputedStyle(buttonTeamplate);
   for (var i = 0; i < pin.length; i++) {
     var mapPin = document.createElement('button');
     mapPin.className = 'map__pin';
     var imgPin = document.createElement('img');
-    mapPin.style.left = pin[i].location.x - parseInt(buttonStyle.width, 10) / 2 + 'px';
-    mapPin.style.top = pin[i].location.x - parseInt(buttonStyle.height, 10) + 'px';
+    mapPin.style.left = pin[i].location.x - 50 / 2 + 'px';
+    mapPin.style.top = pin[i].location.y - 70 + 'px';
     imgPin.width = AVATAR_WIDTH;
     imgPin.height = AVATAR_HEIGHT;
     imgPin.src = pin[i].author.avatar;
     mapPin.appendChild(imgPin);
     pinElement.appendChild(mapPin);
     fragment.appendChild(pinElement);
+
+    console.log(getAvatar(i + 1))
+
   }
   return fragment;
 }
