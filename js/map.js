@@ -10,7 +10,9 @@ function getAddress(x, y) {
   return x + ', ' + y;
 }
 function getRandomItemFromAnArray(arr) {
-  Math.floor(Math.random() * arr.length);
+  var number = Math.floor(Math.random() * arr.length);
+
+  return arr[number];
 }
 function getFeatures() {
   var arr = [];
@@ -18,6 +20,7 @@ function getFeatures() {
   for (var i = 0; i < featuresLength; i++) {
     arr[i] = FEATURES[i];
   }
+  return arr;
 }
 var AVATAR_WIDTH = 40;
 var AVATAR_HEIGHT = 40;
@@ -27,9 +30,11 @@ var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditio
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 function getMainObject() {
   var offers = [];
+
   for (var i = 0; i < 8; i++) {
     var locationX = getRandomNumberBetween(300, 900);
     var locationY = getRandomNumberBetween(150, 500);
+console.log(offers[i])
     offers[i] = {
       author: {
         avatar: getAvatar(i + 1),
@@ -63,6 +68,7 @@ function renderPin(pin) {
   var pinTemplate = document.querySelector('template').content;
   var pinElement = pinTemplate.cloneNode(true);
   var fragment = document.createDocumentFragment();
+
   for (var i = 0; i < pin.length; i++) {
     var mapPin = document.createElement('button');
     mapPin.className = 'map__pin';
@@ -76,7 +82,7 @@ function renderPin(pin) {
     pinElement.appendChild(mapPin);
     fragment.appendChild(pinElement);
 
-    console.log(getAvatar(i + 1))
+    console.log(getMainObject())
 
   }
   return fragment;
