@@ -9,6 +9,18 @@ var timeIn = document.querySelector('#timein');
 var timeout = document.querySelector('#timeout');
 var roomNumber = document.querySelector('#room_number');
 var capacity = document.querySelector('#capacity');
+var typeToPrice = {
+  'bungalo': 0,
+  'flat': 1000,
+  'house': 5000,
+  'palace': 10000
+};
+var roomToCapacity = {
+  '1': ['1'],
+  '2': ['1', '2'],
+  '3': ['1', '2', '3'],
+  '100': ['0']
+};
 
 function addAttribute(element, name, value) {
   element.setAttribute(name, value);
@@ -16,23 +28,15 @@ function addAttribute(element, name, value) {
 
 title.required = true;
 price.required = true;
+price.max = 1000000;
 
 addAttribute(noticeForm, 'action', 'https://js.dump.academy/keksobooking');
 addAttribute(title, 'minlength', 30);
 addAttribute(title, 'maxlength', 100);
-addAttribute(price, 'max', 1000000);
 addAttribute(address, 'readonly', true);
 
 function onTypeInput() {
-  if (type.value === 'flat') {
-    addAttribute(price, 'min', 1000);
-  } else if (type.value === 'bungalo') {
-    addAttribute(price, 'min', 0);
-  } else if (type.value === 'house') {
-    addAttribute(price, 'min', 5000);
-  } else if (type.value === 'palace') {
-    addAttribute(price, 'min', 10000);
-  }
+  price.min = typeToPrice[type.value];
 }
 
 type.addEventListener('change', function () {
@@ -48,8 +52,12 @@ timeout.addEventListener('change', function (evt) {
 });
 
 function disableCapacity() {
-  console.log('---')
+  var capacityOption = capacity.querySelectorAll('option');
+  var capacityValues = roomToCapacity[roomNumber.value];
 
+  capacityOption.forEach(function (option) {
+    option.disabled = !capacityValues.includes(option.value);
+  });
 }
 
 roomNumber.addEventListener('change', function () {
