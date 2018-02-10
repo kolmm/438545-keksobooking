@@ -30,6 +30,32 @@ function getFeatures() {
   return arr;
 }
 
+function deleteChildren(el) {
+  while (el.hasChildNodes()) {
+    el.removeChild(el.firstChild);
+  }
+}
+
+function createFeatures(data) {
+  var features = document.createDocumentFragment();
+  for (var i = 0; i < data.length; i++) {
+    var feature = document.createElement('li');
+    feature.classList.add('feature', 'feature--' + data[i]);
+    features.appendChild(feature);
+  }
+  return features;
+}
+
+function createImg(data) {
+  var images = document.createDocumentFragment();
+  for (var i = 0; i < data.length; i++) {
+    var image = document.createElement('li');
+    image.innerHTML = '<img src="' + data[i] + '" height="40">';
+    images.appendChild(image);
+  }
+  return images;
+}
+
 var AVATAR_WIDTH = 40;
 var AVATAR_HEIGHT = 40;
 var HOUSE_TYPE = ['flat', 'house', 'bungalo'];
@@ -71,10 +97,6 @@ function getMainObject() {
   return offers;
 }
 
-var map = document.querySelector('.map');
-
-map.classList.remove('map--faded');
-
 function renderPin(pin) {
   var pinTemplate = document.querySelector('template').content;
   var pinElement = pinTemplate.cloneNode(true);
@@ -97,10 +119,6 @@ function renderPin(pin) {
 
   return fragment;
 }
-
-var mapPins = document.querySelector('.map__pins');
-
-mapPins.appendChild(renderPin(getMainObject()));
 
 function renderCard(card) {
   var adCard = document.querySelector('.popup').cloneNode(true);
@@ -129,32 +147,46 @@ function renderCard(card) {
   return adCard;
 }
 
-function deleteChildren(el) {
-  while (el.hasChildNodes()) {
-    el.removeChild(el.firstChild);
-  }
+// var mapFilters = document.querySelector('.map__filters-container');
+
+// map.insertBefore(renderCard(getMainObject()), mapFilters);
+
+var map = document.querySelector('.map');
+var noticeForm = document.querySelector('.notice__form');
+var fieldSet = noticeForm.querySelectorAll('fieldset');
+var mapPinMain = document.querySelector('.map__pin--main');
+var address = noticeForm.querySelector('#address');
+
+fieldSet.forEach(function (field) {
+  field.disabled = true;
+});
+
+function setAddress(isInitial) {
+  var x = mapPinMain.offsetLeft;
+  var y = isInitial ? mapPinMain.offsetTop : mapPinMain.offsetTop + mapPinMain.offsetHeight;
+
+  address.value = x + ', ' + y;
 }
 
-function createFeatures(data) {
-  var features = document.createDocumentFragment();
-  for (var i = 0; i < data.length; i++) {
-    var feature = document.createElement('li');
-    feature.classList.add('feature', 'feature--' + data[i]);
-    features.appendChild(feature);
-  }
-  return features;
+setAddress(true);
+
+function makePageActive() {
+  var mapPins = document.querySelector('.map__pins');
+
+  map.classList.remove('map--faded');
+  noticeForm.classList.remove('notice__form--disabled');
+  fieldSet.forEach(function (field) {
+    field.disabled = false;
+  });
+  mapPins.appendChild(renderPin(getMainObject()));
 }
 
-function createImg(data) {
-  var images = document.createDocumentFragment();
-  for (var i = 0; i < data.length; i++) {
-    var image = document.createElement('li');
-    image.innerHTML = '<img src="' + data[i] + '" height="40">';
-    images.appendChild(image);
+function onMapClick() {
+  if (map.classList.contains('map--faded')) {
+    makePageActive();
   }
-  return images;
+
+  setAddress(false);
 }
 
-var mapFilters = document.querySelector('.map__filters-container');
-
-map.insertBefore(renderCard(getMainObject()), mapFilters);
+mapPinMain.addEventListener('mouseup', onMapClick);
