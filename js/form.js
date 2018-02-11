@@ -1,14 +1,17 @@
 'use strict';
 
 var noticeForm = document.querySelector('.notice__form');
-var title = document.querySelector('#title');
-var price = document.querySelector('#price');
-var type = document.querySelector('#type');
-var address = document.querySelector('#address');
-var timeIn = document.querySelector('#timein');
-var timeout = document.querySelector('#timeout');
-var roomNumber = document.querySelector('#room_number');
-var capacity = document.querySelector('#capacity');
+var title = noticeForm.querySelector('#title');
+var price = noticeForm.querySelector('#price');
+var type = noticeForm.querySelector('#type');
+var address = noticeForm.querySelector('#address');
+var timeIn = noticeForm.querySelector('#timein');
+var timeout = noticeForm.querySelector('#timeout');
+var roomNumber = noticeForm.querySelector('#room_number');
+var capacity = noticeForm.querySelector('#capacity');
+var description = noticeForm.querySelector('#description');
+var formResetBtn = noticeForm.querySelector('.form__reset');
+var noticeFormFeatures = noticeForm.querySelectorAll('.form__element.features input');
 var typeToPrice = {
   'bungalo': 0,
   'flat': 1000,
@@ -21,6 +24,15 @@ var roomToCapacity = {
   '3': ['1', '2', '3'],
   '100': ['0']
 };
+
+function makeOriginState() {
+  title.value = '';
+  price.value = '';
+  description.value = '';
+  noticeFormFeatures.forEach(function (feature) {
+    feature.checked = false;
+  });
+}
 
 function addAttribute(element, name, value) {
   element.setAttribute(name, value);
@@ -39,6 +51,15 @@ function onTypeInput() {
   price.min = typeToPrice[type.value];
 }
 
+function disableCapacity() {
+  var capacityOption = capacity.querySelectorAll('option');
+  var capacityValues = roomToCapacity[roomNumber.value];
+
+  capacityOption.forEach(function (option) {
+    option.disabled = !capacityValues.includes(option.value);
+  });
+}
+
 type.addEventListener('change', function () {
   onTypeInput();
 });
@@ -51,15 +72,14 @@ timeout.addEventListener('change', function (evt) {
   timeIn.value = evt.target.value;
 });
 
-function disableCapacity() {
-  var capacityOption = capacity.querySelectorAll('option');
-  var capacityValues = roomToCapacity[roomNumber.value];
-
-  capacityOption.forEach(function (option) {
-    option.disabled = !capacityValues.includes(option.value);
-  });
-}
-
 roomNumber.addEventListener('change', function () {
   disableCapacity();
+});
+
+noticeForm.addEventListener('invalid', function (evt) {
+  evt.target.style.borderColor = 'red';
+}, true);
+
+formResetBtn.addEventListener('click', function () {
+  makeOriginState();
 });
