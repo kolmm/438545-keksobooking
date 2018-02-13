@@ -49,6 +49,7 @@
 
   function makeMinPrice() {
     price.min = typeToPrice[type.value];
+    price.placeholder = typeToPrice[type.value];
   }
 
   function disableCapacity() {
