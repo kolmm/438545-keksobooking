@@ -8,7 +8,6 @@
   var timeIn = noticeForm.querySelector('#timein');
   var timeout = noticeForm.querySelector('#timeout');
   var roomNumber = noticeForm.querySelector('#room_number');
-  var capacity = noticeForm.querySelector('#capacity');
   var description = noticeForm.querySelector('#description');
   var formResetBtn = noticeForm.querySelector('.form__reset');
   var noticeFormFeatures = noticeForm.querySelectorAll('.form__element.features input');
@@ -17,12 +16,6 @@
     'flat': 1000,
     'house': 5000,
     'palace': 10000
-  };
-  var roomToCapacity = {
-    '1': ['1'],
-    '2': ['1', '2'],
-    '3': ['1', '2', '3'],
-    '100': ['0']
   };
 
   function makeOriginState() {
@@ -52,15 +45,6 @@
     price.placeholder = typeToPrice[type.value];
   }
 
-  function disableCapacity() {
-    var capacityOption = capacity.querySelectorAll('option');
-    var capacityValues = roomToCapacity[roomNumber.value];
-
-    capacityOption.forEach(function (option) {
-      option.disabled = !capacityValues.includes(option.value);
-    });
-  }
-
   type.addEventListener('change', function () {
     makeMinPrice();
   });
@@ -74,7 +58,7 @@
   });
 
   roomNumber.addEventListener('change', function () {
-    disableCapacity();
+    window.disableCapacity();
   });
 
   noticeForm.addEventListener('invalid', function (evt) {

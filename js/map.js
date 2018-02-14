@@ -195,6 +195,7 @@ function makePageActive() {
 function onMapClick() {
   if (map.classList.contains('map--faded')) {
     makePageActive();
+    window.disableCapacity();
   }
 
   setAddress(false);
