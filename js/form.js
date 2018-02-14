@@ -13,6 +13,7 @@
   var noticeFormFeatures = noticeForm.querySelectorAll('.form__element.features input');
 
   function makeOriginState() {
+    // сделать изменения для placeholder и .min
     title.value = '';
     price.value = '';
     description.value = '';
@@ -56,5 +57,7 @@
 
   formResetBtn.addEventListener('click', function () {
     makeOriginState();
+    // не могу разобраться почему не ставит адрес при нажатии на ресет
+    window.setAddress(true);
   });
 })();
