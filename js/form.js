@@ -36,7 +36,7 @@
   addAttribute(address, 'readonly', true);
 
   type.addEventListener('change', function () {
-    window.makeMinPrice();
+    window.util.makeMinPrice();
   });
 
   timeIn.addEventListener('change', function (evt) {
@@ -48,7 +48,7 @@
   });
 
   roomNumber.addEventListener('change', function () {
-    window.disableCapacity();
+    window.util.disableCapacity();
   });
 
   noticeForm.addEventListener('invalid', function (evt) {
@@ -58,6 +58,6 @@
   formResetBtn.addEventListener('click', function () {
     makeOriginState();
     // не могу разобраться почему не ставит адрес при нажатии на ресет
-    window.setAddress(true);
+    window.util.setAddress(true);
   });
 })();

@@ -10,7 +10,7 @@ fieldSet.forEach(function (field) {
   field.disabled = true;
 });
 
-window.setAddress(true);
+window.util.setAddress(true);
 
 function makePageActive() {
   var mapPins = document.querySelector('.map__pins');
@@ -28,11 +28,11 @@ function makePageActive() {
 function onMapClick() {
   if (map.classList.contains('map--faded')) {
     makePageActive();
-    window.disableCapacity();
-    window.makeMinPrice();
+    window.util.disableCapacity();
+    window.util.makeMinPrice();
   }
 
-  window.setAddress(false);
+  window.util.setAddress(false);
 }
 
 mapPinMain.addEventListener('mouseup', onMapClick);
