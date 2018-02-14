@@ -158,7 +158,6 @@ var map = document.querySelector('.map');
 var noticeForm = document.querySelector('.notice__form');
 var fieldSet = noticeForm.querySelectorAll('fieldset');
 var mapPinMain = document.querySelector('.map__pin--main');
-var address = noticeForm.querySelector('#address');
 
 fieldSet.forEach(function (field) {
   field.disabled = true;
@@ -170,14 +169,7 @@ function onPinClick(evt, pin) {
   map.insertBefore(renderCard(pin), mapFilters);
 }
 
-function setAddress(isInitial) {
-  var x = mapPinMain.offsetLeft;
-  var y = isInitial ? mapPinMain.offsetTop : mapPinMain.offsetTop + mapPinMain.offsetHeight;
-
-  address.value = x + ', ' + y;
-}
-
-setAddress(true);
+window.setAddress(true);
 
 function makePageActive() {
   var mapPins = document.querySelector('.map__pins');
@@ -195,9 +187,11 @@ function makePageActive() {
 function onMapClick() {
   if (map.classList.contains('map--faded')) {
     makePageActive();
+    window.disableCapacity();
+    window.makeMinPrice();
   }
 
-  setAddress(false);
+  window.setAddress(false);
 }
 
 mapPinMain.addEventListener('mouseup', onMapClick);
