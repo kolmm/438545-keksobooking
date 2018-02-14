@@ -1,34 +1,34 @@
 'use strict';
 
-var getAvatar = function (num) {
-  return 'img/avatars/user0' + num + '.png';
-};
+// var getAvatar = function (num) {
+//   return 'img/avatars/user0' + num + '.png';
+// };
 
-var DEFAULT_TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
-function getRandomNumberBetween(min, max) {
-  return Math.floor(Math.random() * (max - min) + min);
-}
+// var DEFAULT_TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
+// function getRandomNumberBetween(min, max) {
+//   return Math.floor(Math.random() * (max - min) + min);
+// }
 
-function getAddress(x, y) {
-  return x + ', ' + y;
-}
+// function getAddress(x, y) {
+//   return x + ', ' + y;
+// }
 
-function getRandomItemFromAnArray(arr) {
-  var number = Math.floor(Math.random() * arr.length);
+// function getRandomItemFromAnArray(arr) {
+//   var number = Math.floor(Math.random() * arr.length);
 
-  return arr[number];
-}
+//   return arr[number];
+// }
 
-function getFeatures() {
-  var arr = [];
-  var featuresLength = getRandomNumberBetween(1, FEATURES.length);
+// function getFeatures() {
+//   var arr = [];
+//   var featuresLength = getRandomNumberBetween(1, FEATURES.length);
 
-  for (var i = 0; i < featuresLength; i++) {
-    arr[i] = FEATURES[i];
-  }
+//   for (var i = 0; i < featuresLength; i++) {
+//     arr[i] = FEATURES[i];
+//   }
 
-  return arr;
-}
+//   return arr;
+// }
 
 function deleteChildren(el) {
   while (el.hasChildNodes()) {
@@ -58,44 +58,44 @@ function createImg(data) {
 
 var AVATAR_WIDTH = 40;
 var AVATAR_HEIGHT = 40;
-var HOUSE_TYPE = ['flat', 'house', 'bungalo'];
-var TIMES = ['12:00', '13:00', '14:00'];
-var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+// var HOUSE_TYPE = ['flat', 'house', 'bungalo'];
+// var TIMES = ['12:00', '13:00', '14:00'];
+// var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+// var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
-function getMainObject(number) {
-  var offers = [];
+// function getMainObject(number) {
+//   var offers = [];
 
-  for (var i = 0; i < number; i++) {
-    var locationX = getRandomNumberBetween(300, 900);
-    var locationY = getRandomNumberBetween(150, 500);
+//   for (var i = 0; i < number; i++) {
+//     var locationX = getRandomNumberBetween(300, 900);
+//     var locationY = getRandomNumberBetween(150, 500);
 
-    offers[i] = {
-      author: {
-        avatar: getAvatar(i + 1),
-      },
-      offer: {
-        title: getRandomItemFromAnArray(DEFAULT_TITLES),
-        address: getAddress(locationX, locationY),
-        price: getRandomNumberBetween(1000, 1000000),
-        type: getRandomItemFromAnArray(HOUSE_TYPE),
-        rooms: getRandomNumberBetween(1, 5),
-        guests: getRandomNumberBetween(1, 4),
-        checkin: getRandomItemFromAnArray(TIMES),
-        checkout: getRandomItemFromAnArray(TIMES),
-        features: getFeatures(),
-        description: '',
-        photos: PHOTOS
-      },
-      location: {
-        x: locationX,
-        y: locationY
-      }
-    };
-  }
+//     offers[i] = {
+//       author: {
+//         avatar: getAvatar(i + 1),
+//       },
+//       offer: {
+//         title: getRandomItemFromAnArray(DEFAULT_TITLES),
+//         address: getAddress(locationX, locationY),
+//         price: getRandomNumberBetween(1000, 1000000),
+//         type: getRandomItemFromAnArray(HOUSE_TYPE),
+//         rooms: getRandomNumberBetween(1, 5),
+//         guests: getRandomNumberBetween(1, 4),
+//         checkin: getRandomItemFromAnArray(TIMES),
+//         checkout: getRandomItemFromAnArray(TIMES),
+//         features: getFeatures(),
+//         description: '',
+//         photos: PHOTOS
+//       },
+//       location: {
+//         x: locationX,
+//         y: locationY
+//       }
+//     };
+//   }
 
-  return offers;
-}
+//   return offers;
+// }
 
 function renderPin(pin) {
   var pinTemplate = document.querySelector('template').content.querySelector('.map__pin');
@@ -153,7 +153,7 @@ function renderCard(card) {
   return adCard;
 }
 
-var mainObject = getMainObject(8);
+var mainObject = window.getMainObject(8);
 var map = document.querySelector('.map');
 var noticeForm = document.querySelector('.notice__form');
 var fieldSet = noticeForm.querySelectorAll('fieldset');
