@@ -196,6 +196,7 @@ function onMapClick() {
   if (map.classList.contains('map--faded')) {
     makePageActive();
     window.disableCapacity();
+    window.makeMinPrice();
   }
 
   setAddress(false);

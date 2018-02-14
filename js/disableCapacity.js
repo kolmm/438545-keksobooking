@@ -3,7 +3,7 @@
 
 (function () {
   var capacity = document.querySelector('#capacity');
-  var roomNumber = document.querySelector('#room_number');  
+  var roomNumber = document.querySelector('#room_number');
   var roomToCapacity = {
     '1': ['1'],
     '2': ['1', '2'],

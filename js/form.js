@@ -2,21 +2,15 @@
 (function () {
   var noticeForm = document.querySelector('.notice__form');
   var title = noticeForm.querySelector('#title');
-  var price = noticeForm.querySelector('#price');
-  var type = noticeForm.querySelector('#type');
   var address = noticeForm.querySelector('#address');
+  var type = noticeForm.querySelector('#type');
+  var price = noticeForm.querySelector('#price');
   var timeIn = noticeForm.querySelector('#timein');
   var timeout = noticeForm.querySelector('#timeout');
   var roomNumber = noticeForm.querySelector('#room_number');
   var description = noticeForm.querySelector('#description');
   var formResetBtn = noticeForm.querySelector('.form__reset');
   var noticeFormFeatures = noticeForm.querySelectorAll('.form__element.features input');
-  var typeToPrice = {
-    'bungalo': 0,
-    'flat': 1000,
-    'house': 5000,
-    'palace': 10000
-  };
 
   function makeOriginState() {
     title.value = '';
@@ -40,13 +34,8 @@
   addAttribute(title, 'maxlength', 100);
   addAttribute(address, 'readonly', true);
 
-  function makeMinPrice() {
-    price.min = typeToPrice[type.value];
-    price.placeholder = typeToPrice[type.value];
-  }
-
   type.addEventListener('change', function () {
-    makeMinPrice();
+    window.makeMinPrice();
   });
 
   timeIn.addEventListener('change', function (evt) {
