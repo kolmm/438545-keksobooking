@@ -30,6 +30,7 @@ function onMapClick() {
     makePageActive();
     window.util.disableCapacity();
     window.util.makeMinPrice();
+    window.util.capacity.options[2].selected = true;
   }
 
   window.util.setAddress(false);

@@ -5,7 +5,6 @@
   var mapPinMain = document.querySelector('.map__pin--main');
   var price = document.querySelector('#price');
   var type = document.querySelector('#type');
-  var capacity = document.querySelector('#capacity');
   var roomNumber = document.querySelector('#room_number');
   var roomToCapacity = {
     '1': ['1'],
@@ -33,7 +32,7 @@
   }
 
   function disableCapacity() {
-    var capacityOption = capacity.querySelectorAll('option');
+    var capacityOption = window.util.capacity.querySelectorAll('option');
     var capacityValues = roomToCapacity[roomNumber.value];
 
     capacityOption.forEach(function (option) {
@@ -44,6 +43,7 @@
   window.util = {
     setAddress: setAddress,
     makeMinPrice: makeMinPrice,
-    disableCapacity: disableCapacity
+    disableCapacity: disableCapacity,
+    capacity: document.querySelector('#capacity')
   };
 })();

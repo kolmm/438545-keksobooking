@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var ESC_CLICK = 27;
   var map = document.querySelector('.map');
 
   function deleteChildren(el) {
@@ -55,10 +56,28 @@
     adCard.querySelector('.popup__avatar').src = card.author.avatar;
     popupPictures.appendChild(createImg(card.offer.photos));
 
-    closePopupBtn.addEventListener('click', function (evt) {
-      map.removeChild(evt.target.parentNode);
+    closePopupBtn.addEventListener('click', function () {
+      // map.removeChild(evt.target.parentNode);
+      closeMapCard(adCard);
+    });
+
+    document.addEventListener('keydown', function (evt) {
+      onMapCardEscPress(evt, adCard);
     });
 
     return adCard;
   };
+
+  // Что-то не так с removeChild сыпятся ошибки пока не разобрался почему
+  function closeMapCard(adCard) {
+    map.removeChild(adCard);
+
+    document.removeEventListener('keydown', onMapCardEscPress);
+  }
+
+  function onMapCardEscPress(evt, adCard) {
+    if (evt.keyCode === ESC_CLICK) {
+      closeMapCard(adCard);
+    }
+  }
 })();
