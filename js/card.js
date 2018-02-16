@@ -71,6 +71,8 @@
   // Что-то не так с removeChild сыпятся ошибки пока не разобрался почему
   function closeMapCard(adCard) {
     map.removeChild(adCard);
+    // adCard.classList.add('hidden');
+    // Если добавлять hidden то все нрмально работает, но мне как то не нравиться что одна карточка всегда лежит спрятанная
 
     document.removeEventListener('keydown', onMapCardEscPress);
   }
