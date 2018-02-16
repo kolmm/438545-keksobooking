@@ -1,4 +1,5 @@
 'use strict';
+
 (function () {
   var noticeForm = document.querySelector('.notice__form');
   var title = noticeForm.querySelector('#title');
@@ -13,9 +14,10 @@
   var noticeFormFeatures = noticeForm.querySelectorAll('.form__element.features input');
 
   function makeOriginState() {
-    // сделать изменения для placeholder и .min
     title.value = '';
     price.value = '';
+    price.min = 0;
+    price.placeholder = 5000;
     description.value = '';
     noticeFormFeatures.forEach(function (feature) {
       feature.checked = false;
@@ -36,7 +38,7 @@
   addAttribute(address, 'readonly', true);
 
   type.addEventListener('change', function () {
-    window.makeMinPrice();
+    window.util.makeMinPrice();
   });
 
   timeIn.addEventListener('change', function (evt) {
@@ -48,16 +50,17 @@
   });
 
   roomNumber.addEventListener('change', function () {
-    window.disableCapacity();
+    window.util.disableCapacity();
   });
 
   noticeForm.addEventListener('invalid', function (evt) {
     evt.target.style.borderColor = 'red';
   }, true);
 
-  formResetBtn.addEventListener('click', function () {
+  formResetBtn.addEventListener('click', function (evt) {
+    evt.preventDefault();
+
     makeOriginState();
-    // не могу разобраться почему не ставит адрес при нажатии на ресет
-    window.setAddress(true);
+    window.util.setAddress(true);
   });
 })();
