@@ -7,8 +7,13 @@
 
   function onPinClick(evt, pin) {
     var mapFilters = document.querySelector('.map__filters-container');
+    var adCards = map.querySelectorAll('.map__card');
 
     map.insertBefore(window.renderCard(pin), mapFilters);
+
+    if (adCards.length) {
+      map.removeChild(adCards[0]);
+    }
   }
 
   window.renderPin = function (pin) {
