@@ -21,9 +21,9 @@
     fieldSet.forEach(function (field) {
       field.disabled = false;
     });
-    // mainObject.forEach(function (object) {
-    //   mapPins.appendChild(window.renderPin(object));
-    // });
+    mainObject.forEach(function (object) {
+      mapPins.appendChild(window.renderPin(object));
+    });
     window.renderPins();
   }
 
