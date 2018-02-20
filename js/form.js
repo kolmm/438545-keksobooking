@@ -63,4 +63,11 @@
     makeOriginState();
     window.util.setAddress(true);
   });
+
+  noticeForm.addEventListener('submit', function (evt) {
+    window.upload(new FormData(noticeForm), function () {
+      makeOriginState();
+    });
+    evt.preventDefault();
+  });
 })();
