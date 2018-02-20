@@ -24,7 +24,6 @@
     mainObject.forEach(function (object) {
       mapPins.appendChild(window.renderPin(object));
     });
-    window.renderPins();
   }
 
   function onMapClick() {
