@@ -51,17 +51,13 @@
 
     if (coords.x < minX) {
       coords.x = minX;
-    }
-
-    if (coords.x > maxX) {
+    } else if (coords.x > maxX) {
       coords.x = maxX;
     }
 
     if (coords.y < minY) {
       coords.y = minY;
-    }
-
-    if (coords.y > maxY) {
+    } else if (coords.y > maxY) {
       coords.y = maxY;
     }
 
@@ -103,7 +99,7 @@
     function onMouseUp(upEvt) {
       upEvt.preventDefault();
 
-      window.setAddress(false);
+      window.util.setAddress(false);
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
