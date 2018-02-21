@@ -67,7 +67,7 @@
     return adCard;
   };
 
-  function closeMapCard(adCard) {
+  function closeMapCard() {
     var popup = map.querySelector('.popup');
 
     if (popup !== null) {
