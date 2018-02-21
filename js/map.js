@@ -22,7 +22,7 @@
     fieldSet.forEach(function (field) {
       field.disabled = false;
     });
-    window.renderPins();
+    window.getPins();
   }
 
   function onMapClick() {

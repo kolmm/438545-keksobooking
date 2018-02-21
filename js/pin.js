@@ -16,7 +16,7 @@
     }
   }
 
-  window.renderPin = function (pin) {
+  window.makePin = function (pin) {
     var pinTemplate = document.querySelector('template').content.querySelector('.map__pin');
     var mapPin = pinTemplate.cloneNode(true);
     var fragment = document.createDocumentFragment();
@@ -39,15 +39,20 @@
     return fragment;
   };
 
-  window.renderPins = function () {
-    var onSuccess = function (data) {
-      var mapPins = document.querySelector('.map__pins');
+  function renderPins(data) {
+    var mapPins = document.querySelector('.map__pins');
 
-      data.forEach(function (object) {
-        mapPins.appendChild(window.renderPin(object));
-      });
+    data.forEach(function (object) {
+      mapPins.appendChild(window.makePin(object));
+    });
+  }
+
+  window.getPins = function () {
+    var onSuccess = function (data) {
+
+      renderPins(data);
     };
 
-    window.load('GET', 'https://js.dump.academy/keksobooking/data', onSuccess);
+    window.load('https://js.dump.academy/keksobooking/data', onSuccess);
   };
 })();
