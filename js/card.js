@@ -57,7 +57,6 @@
     popupPictures.appendChild(createImg(card.offer.photos));
 
     closePopupBtn.addEventListener('click', function () {
-      // map.removeChild(evt.target.parentNode);
       closeMapCard(adCard);
     });
 
@@ -68,11 +67,12 @@
     return adCard;
   };
 
-  // Что-то не так с removeChild сыпятся ошибки пока не разобрался почему
-  function closeMapCard(adCard) {
-    map.removeChild(adCard);
-    // adCard.classList.add('hidden');
-    // Если добавлять hidden то все нрмально работает, но мне как то не нравиться что одна карточка всегда лежит спрятанная
+  function closeMapCard() {
+    var popup = map.querySelector('.popup');
+
+    if (popup !== null) {
+      popup.parentNode.removeChild(popup);
+    }
 
     document.removeEventListener('keydown', onMapCardEscPress);
   }

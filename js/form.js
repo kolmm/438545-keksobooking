@@ -63,4 +63,21 @@
     makeOriginState();
     window.util.setAddress(true);
   });
+
+  function onSuccess() {
+    makeOriginState();
+  }
+
+  function onError(response) {
+    var errorMessage = document.createElement('div');
+
+    errorMessage.classList.add('error-message');
+    errorMessage.textContent = 'Произошла ошибка:' + ' ' + response;
+    document.querySelector('.notice').insertBefore(errorMessage, noticeForm);
+  }
+
+  noticeForm.addEventListener('submit', function (evt) {
+    window.load('https://js.dump.academy/keksobooking', 'POST', new FormData(noticeForm), onSuccess, onError);
+    evt.preventDefault();
+  });
 })();

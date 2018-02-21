@@ -760,6 +760,13 @@ textarea:focus
     background: none;
 }
 
+.error-message 
+{
+    margin: 0 auto;
+    background-color: red;
+    text-align: center;
+    font-size: 28px;    
+}
 
 .footer
 {
