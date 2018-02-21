@@ -53,6 +53,6 @@
       renderPins(data);
     };
 
-    window.load('https://js.dump.academy/keksobooking/data', onSuccess);
+    window.load('https://js.dump.academy/keksobooking/data', 'GET', '', onSuccess);
   };
 })();

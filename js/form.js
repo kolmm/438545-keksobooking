@@ -64,10 +64,21 @@
     window.util.setAddress(true);
   });
 
+  function onSuccess() {
+    makeOriginState();
+  }
+
+  function onError(response) {
+    var errorMessage = document.createElement('div');
+
+    errorMessage.style = 'z-index: 15; margin: 0 auto; text-align: center; background-color: red;';
+    errorMessage.style.fontSize = '28px';
+    errorMessage.textContent = 'Произошла ошибка:' + ' ' + response;
+    document.querySelector('.notice').insertBefore(errorMessage, noticeForm);
+  }
+
   noticeForm.addEventListener('submit', function (evt) {
-    window.upload(new FormData(noticeForm), function () {
-      makeOriginState();
-    });
+    window.load('https://js.dump.academy/keksobookings', 'POST', new FormData(noticeForm), onSuccess, onError);
     evt.preventDefault();
   });
 })();
