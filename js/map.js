@@ -5,7 +5,6 @@
   var MAIN_PIN_OFFSET_Y = 50;
   var MAIN_PIN_MIN_Y = 150;
   var MAIN_PIN_MAX_Y = 500;
-  var mainObject = window.getMainObject(8);
   var map = document.querySelector('.map');
   var noticeForm = document.querySelector('.notice__form');
   var fieldSet = noticeForm.querySelectorAll('fieldset');
@@ -18,15 +17,10 @@
   window.util.setAddress(true);
 
   function makePageActive() {
-    var mapPins = document.querySelector('.map__pins');
-
     map.classList.remove('map--faded');
     noticeForm.classList.remove('notice__form--disabled');
     fieldSet.forEach(function (field) {
       field.disabled = false;
-    });
-    mainObject.forEach(function (object) {
-      mapPins.appendChild(window.renderPin(object));
     });
     window.renderPins();
   }

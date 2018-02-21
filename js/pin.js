@@ -40,19 +40,14 @@
   };
 
   window.renderPins = function () {
-    var onError = function (message) {
-      console.error(message);
-    };
-
     var onSuccess = function (data) {
       var mapPins = document.querySelector('.map__pins');
 
-      console.log(data);
       data.forEach(function (object) {
         mapPins.appendChild(window.renderPin(object));
       });
     };
 
-    window.load('https://js.dump.academy/keksobooking/data', onSuccess, onError);
+    window.load('GET', 'https://js.dump.academy/keksobooking/data', onSuccess);
   };
 })();
