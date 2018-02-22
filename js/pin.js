@@ -47,12 +47,36 @@
     });
   }
 
+  var pins = [];
+  var offerType;
+
   window.getPins = function () {
     var onSuccess = function (data) {
-
-      renderPins(data);
+      pins = data;
+      renderPins(pins);
     };
 
     window.load('https://js.dump.academy/keksobooking/data', 'GET', '', onSuccess);
   };
+  // Перекрывает старые пины.
+  // Надо сделать чтобы заного перерендеривал
+  var updatePins = function () {
+    var housingType = pins.filter(function (it) {
+
+      return it.offer.type === offerType;
+    });
+
+    renderPins(housingType);
+  };
+
+  var mapFilters = document.querySelectorAll('.map__filters');
+
+  mapFilters.forEach(function (select) {
+    select.addEventListener('change', function () {
+      var housingSelect = document.querySelector('#housing-type')
+      offerType = housingSelect.options[housingSelect.selectedIndex].value;
+
+      updatePins();
+    });
+  });
 })();
