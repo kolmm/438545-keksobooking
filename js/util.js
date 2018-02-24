@@ -40,10 +40,36 @@
     });
   }
 
+  var getNoticeFormValue = function (form) {
+    var arrValue = [];
+    form.querySelectorAll('[name]').forEach(function (value) {
+      var valueCurent = {};
+      switch (value.tagName.toLocaleLowerCase()) {
+        case 'input':
+          if (value.type === 'checkbox') {
+            valueCurent = {id: value.id, value: value.checked};
+          } else {
+            valueCurent = {id: value.id, value: value.value};
+          }
+          break;
+        case 'select':
+          valueCurent = {id: value.id, value: value.value};
+          break;
+        case 'textarea':
+          valueCurent = {id: value.id, value: value.value};
+          break;
+        default:
+      }
+      arrValue.push(valueCurent);
+    });
+    return arrValue;
+  };
+
   window.util = {
     setAddress: setAddress,
     makeMinPrice: makeMinPrice,
     disableCapacity: disableCapacity,
-    capacity: document.querySelector('#capacity')
+    capacity: document.querySelector('#capacity'),
+    getNoticeFormValue: getNoticeFormValue
   };
 })();

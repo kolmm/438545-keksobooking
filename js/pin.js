@@ -6,17 +6,17 @@
   var map = document.querySelector('.map');
 
   function onPinClick(evt, pin) {
-    var mapFilters = document.querySelector('.map__filters-container');
+    var mapFiltersContainer = document.querySelector('.map__filters-container');
     var adCards = map.querySelectorAll('.map__card');
 
-    map.insertBefore(window.renderCard(pin), mapFilters);
+    map.insertBefore(window.renderCard(pin), mapFiltersContainer);
 
     if (adCards.length) {
       map.removeChild(adCards[0]);
     }
   }
 
-  window.makePin = function (pin) {
+  var makePin = function (pin) {
     var pinTemplate = document.querySelector('template').content.querySelector('.map__pin');
     var mapPin = pinTemplate.cloneNode(true);
     var fragment = document.createDocumentFragment();
@@ -39,44 +39,25 @@
     return fragment;
   };
 
-  function renderPins(data) {
+  window.renderPins = function (data) {
     var mapPins = document.querySelector('.map__pins');
+    console.log(data)
 
+    mapPins.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (value) {
+      value.remove();
+    });
     data.forEach(function (object) {
-      mapPins.appendChild(window.makePin(object));
+      mapPins.appendChild(makePin(object));
     });
-  }
-
-  var pins = [];
-  var offerType;
-
-  window.getPins = function () {
-    var onSuccess = function (data) {
-      pins = data;
-      renderPins(pins);
-    };
-
-    window.load('https://js.dump.academy/keksobooking/data', 'GET', '', onSuccess);
-  };
-  // Перекрывает старые пины.
-  // Надо сделать чтобы заного перерендеривал
-  var updatePins = function () {
-    var housingType = pins.filter(function (it) {
-
-      return it.offer.type === offerType;
-    });
-
-    renderPins(housingType);
   };
 
-  var mapFilters = document.querySelectorAll('.map__filters');
+  var mapFilters = document.querySelector('.map__filters');
 
-  mapFilters.forEach(function (select) {
-    select.addEventListener('change', function () {
-      var housingSelect = document.querySelector('#housing-type')
-      offerType = housingSelect.options[housingSelect.selectedIndex].value;
+  var changeFilter = function () {
+    window.renderPins(window.data.getOffers(window.util.getNoticeFormValue(mapFilters)));
+  };
 
-      updatePins();
-    });
+  mapFilters.addEventListener('change', function () {
+    window.debounce(changeFilter);
   });
 })();

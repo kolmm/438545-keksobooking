@@ -16,18 +16,19 @@
 
   window.util.setAddress(true);
 
-  function makePageActive() {
+  function makePageActive(data) {
+    window.data.addOffers(data);
     map.classList.remove('map--faded');
     noticeForm.classList.remove('notice__form--disabled');
     fieldSet.forEach(function (field) {
       field.disabled = false;
     });
-    window.getPins();
+    window.renderPins(data);
   }
 
   function onMapClick() {
     if (map.classList.contains('map--faded')) {
-      makePageActive();
+      window.load('https://js.dump.academy/keksobooking/data', 'GET', '', makePageActive);
       window.util.disableCapacity();
       window.util.makeMinPrice();
       window.util.capacity.options[2].selected = true;
