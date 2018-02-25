@@ -19,29 +19,30 @@
     'palace': 10000
   };
 
-  function setAddress(isInitial) {
+  var setAddress = function (isInitial) {
     var x = mapPinMain.offsetLeft;
     var y = isInitial ? mapPinMain.offsetTop : mapPinMain.offsetTop + mapPinMain.offsetHeight;
 
     address.value = x + ', ' + y;
-  }
+  };
 
-  function makeMinPrice() {
+  var makeMinPrice = function () {
     price.min = typeToPrice[type.value];
     price.placeholder = typeToPrice[type.value];
-  }
+  };
 
-  function disableCapacity() {
+  var disableCapacity = function () {
     var capacityOption = window.util.capacity.querySelectorAll('option');
     var capacityValues = roomToCapacity[roomNumber.value];
 
     capacityOption.forEach(function (option) {
       option.disabled = !capacityValues.includes(option.value);
     });
-  }
+  };
 
   var getNoticeFormValue = function (form) {
-    var arrValue = [];
+    var noticeFormArrValue = [];
+
     form.querySelectorAll('[name]').forEach(function (value) {
       var valueCurent = {};
       switch (value.tagName.toLocaleLowerCase()) {
@@ -55,14 +56,11 @@
         case 'select':
           valueCurent = {id: value.id, value: value.value};
           break;
-        case 'textarea':
-          valueCurent = {id: value.id, value: value.value};
-          break;
         default:
       }
-      arrValue.push(valueCurent);
+      noticeFormArrValue.push(valueCurent);
     });
-    return arrValue;
+    return noticeFormArrValue;
   };
 
   window.util = {

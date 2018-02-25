@@ -13,7 +13,7 @@
   var formResetBtn = noticeForm.querySelector('.form__reset');
   var noticeFormFeatures = noticeForm.querySelectorAll('.form__element.features input');
 
-  function makeOriginState() {
+  var makeOriginState = function () {
     title.value = '';
     price.value = '';
     price.min = 0;
@@ -22,11 +22,11 @@
     noticeFormFeatures.forEach(function (feature) {
       feature.checked = false;
     });
-  }
+  };
 
-  function addAttribute(element, name, value) {
+  var addAttribute = function (element, name, value) {
     element.setAttribute(name, value);
-  }
+  };
 
   title.required = true;
   price.required = true;
@@ -64,17 +64,17 @@
     window.util.setAddress(true);
   });
 
-  function onSuccess() {
+  var onSuccess = function () {
     makeOriginState();
-  }
+  };
 
-  function onError(response) {
+  var onError = function (response) {
     var errorMessage = document.createElement('div');
 
     errorMessage.classList.add('error-message');
     errorMessage.textContent = 'Произошла ошибка:' + ' ' + response;
     document.querySelector('.notice').insertBefore(errorMessage, noticeForm);
-  }
+  };
 
   noticeForm.addEventListener('submit', function (evt) {
     window.load('https://js.dump.academy/keksobooking', 'POST', new FormData(noticeForm), onSuccess, onError);

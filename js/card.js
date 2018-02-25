@@ -4,13 +4,13 @@
   var ESC_CLICK = 27;
   var map = document.querySelector('.map');
 
-  function deleteChildren(el) {
+  var deleteChildren = function (el) {
     while (el.hasChildNodes()) {
       el.removeChild(el.firstChild);
     }
-  }
+  };
 
-  function createFeatures(data) {
+  var createFeatures = function (data) {
     var features = document.createDocumentFragment();
     for (var i = 0; i < data.length; i++) {
       var feature = document.createElement('li');
@@ -18,9 +18,9 @@
       features.appendChild(feature);
     }
     return features;
-  }
+  };
 
-  function createImg(data) {
+  var createImg = function (data) {
     var images = document.createDocumentFragment();
     for (var i = 0; i < data.length; i++) {
       var image = document.createElement('li');
@@ -28,7 +28,7 @@
       images.appendChild(image);
     }
     return images;
-  }
+  };
 
   window.renderCard = function (card) {
     var adCardTemplate = document.querySelector('template').content.querySelector('.map__card');
@@ -67,7 +67,7 @@
     return adCard;
   };
 
-  function closeMapCard() {
+  var closeMapCard = function () {
     var popup = map.querySelector('.popup');
 
     if (popup !== null) {
@@ -75,11 +75,11 @@
     }
 
     document.removeEventListener('keydown', onMapCardEscPress);
-  }
+  };
 
-  function onMapCardEscPress(evt, adCard) {
+  var onMapCardEscPress = function (evt, adCard) {
     if (evt.keyCode === ESC_CLICK) {
       closeMapCard(adCard);
     }
-  }
+  };
 })();

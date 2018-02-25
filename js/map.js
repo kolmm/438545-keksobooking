@@ -16,17 +16,17 @@
 
   window.util.setAddress(true);
 
-  function makePageActive(data) {
+  var makePageActive = function (data) {
     window.data.addOffers(data);
     map.classList.remove('map--faded');
     noticeForm.classList.remove('notice__form--disabled');
     fieldSet.forEach(function (field) {
       field.disabled = false;
     });
-    window.renderPins(data);
-  }
+    window.renderPins(window.data.offersSlice());
+  };
 
-  function onMapClick() {
+  var onMapClick = function () {
     if (map.classList.contains('map--faded')) {
       window.load('https://js.dump.academy/keksobooking/data', 'GET', '', makePageActive);
       window.util.disableCapacity();
@@ -35,11 +35,11 @@
     }
 
     window.util.setAddress(false);
-  }
+  };
 
   mapPinMain.addEventListener('mouseup', onMapClick);
 
-  function checkCoords(coords) {
+  var checkCoords = function (coords) {
     var minX = MAIN_PIN_OFFSET_X;
     var maxX = document.querySelector('.map').offsetWidth - MAIN_PIN_OFFSET_X;
     var minY = MAIN_PIN_MIN_Y - MAIN_PIN_OFFSET_Y;
@@ -58,9 +58,9 @@
     }
 
     return coords;
-  }
+  };
 
-  function onMapPinMainMouseDown(evt) {
+  var onMapPinMainMouseDown = function (evt) {
     evt.preventDefault();
 
     var startCoords = {
@@ -68,7 +68,7 @@
       y: evt.clientY
     };
 
-    function onMouseMove(moveEvt) {
+    var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
       var shift = {
@@ -90,20 +90,20 @@
 
       mapPinMain.style.top = (newCoords.y) + 'px';
       mapPinMain.style.left = (newCoords.x) + 'px';
-    }
+    };
 
-    function onMouseUp(upEvt) {
+    var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
       window.util.setAddress(false);
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
-    }
+    };
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
-  }
+  };
 
   mapPinMain.addEventListener('mousedown', function (evt) {
     onMapPinMainMouseDown(evt);

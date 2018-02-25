@@ -5,7 +5,7 @@
   var AVATAR_HEIGHT = 40;
   var map = document.querySelector('.map');
 
-  function onPinClick(evt, pin) {
+  var onPinClick = function (evt, pin) {
     var mapFiltersContainer = document.querySelector('.map__filters-container');
     var adCards = map.querySelectorAll('.map__card');
 
@@ -14,7 +14,7 @@
     if (adCards.length) {
       map.removeChild(adCards[0]);
     }
-  }
+  };
 
   var makePin = function (pin) {
     var pinTemplate = document.querySelector('template').content.querySelector('.map__pin');
@@ -41,7 +41,6 @@
 
   window.renderPins = function (data) {
     var mapPins = document.querySelector('.map__pins');
-    console.log(data)
 
     mapPins.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (value) {
       value.remove();
