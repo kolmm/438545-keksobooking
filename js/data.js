@@ -3,6 +3,11 @@
 (function () {
   var offers = [];
 
+  var price = {
+    LOW: 10000,
+    HIGH: 50000
+  };
+
   var filtersForOffersId = {
     'housing-type': 'type',
     'housing-price': 'price',
@@ -22,11 +27,6 @@
     'high': 'HIGH'
   };
 
-  var price = {
-    LOW: 10000,
-    HIGH: 50000
-  };
-
   var addOffers = function (offersArr) {
     offersArr.forEach(function (value) {
       offers.push(value);
@@ -42,31 +42,28 @@
 
     if (filterCurrent.value === 'any' || filterCurrent.value === false) {
       return offersCurrent;
-    }
-    if (filterCurrentSplit === 'filter') {
+    } else if (filterCurrentSplit === 'filter') {
       return offersCurrent.filter(function (value) {
         return value.offer.features.indexOf(filtersForOffersId[filterCurrent.id]) > -1;
       });
-    } else {
-      if (filtersForOffersId[filterCurrent.id] === 'price') {
-        if (filtersForOffersValue[filterCurrent.value] === 'LOW') {
-          return offersCurrent.filter(function (value) {
-            return value.offer.price < price.LOW;
-          });
-        } else if (filtersForOffersValue[filterCurrent.value] === 'HIGH') {
-          return offersCurrent.filter(function (value) {
-            return value.offer.price > price.HIGH;
-          });
-        } else if (filtersForOffersValue[filterCurrent.value] === 'MIDDLE') {
-          return offersCurrent.filter(function (value) {
-            return (value.offer.price <= price.HIGH && value.offer.price >= price.LOW);
-          });
-        }
-      } else {
+    } else if (filtersForOffersId[filterCurrent.id] === 'price') {
+      if (filtersForOffersValue[filterCurrent.value] === 'LOW') {
         return offersCurrent.filter(function (value) {
-          return value.offer[filtersForOffersId[filterCurrent.id]].toString() === filterCurrent.value;
+          return value.offer.price < price.LOW;
+        });
+      } else if (filtersForOffersValue[filterCurrent.value] === 'HIGH') {
+        return offersCurrent.filter(function (value) {
+          return value.offer.price > price.HIGH;
+        });
+      } else if (filtersForOffersValue[filterCurrent.value] === 'MIDDLE') {
+        return offersCurrent.filter(function (value) {
+          return (value.offer.price <= price.HIGH && value.offer.price >= price.LOW);
         });
       }
+    } else {
+      return offersCurrent.filter(function (value) {
+        return value.offer[filtersForOffersId[filterCurrent.id]].toString() === filterCurrent.value;
+      });
     }
     return offersCurrent;
   };

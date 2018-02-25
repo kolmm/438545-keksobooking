@@ -3,6 +3,8 @@
 (function () {
   var AVATAR_WIDTH = 40;
   var AVATAR_HEIGHT = 40;
+  var PIN_WIDTH = 50;
+  var PIN_HEIGHT = 70;
   var map = document.querySelector('.map');
 
   var onPinClick = function (evt, pin) {
@@ -23,8 +25,8 @@
     var imgPin = mapPin.querySelector('img');
 
     mapPin.className = 'map__pin';
-    mapPin.style.left = pin.location.x - 50 / 2 + 'px';
-    mapPin.style.top = pin.location.y - 70 + 'px';
+    mapPin.style.left = pin.location.x - PIN_WIDTH / 2 + 'px';
+    mapPin.style.top = pin.location.y - PIN_HEIGHT + 'px';
     imgPin.width = AVATAR_WIDTH;
     imgPin.height = AVATAR_HEIGHT;
     imgPin.src = pin.author.avatar;

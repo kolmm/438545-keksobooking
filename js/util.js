@@ -41,7 +41,7 @@
   };
 
   var getNoticeFormValue = function (form) {
-    var noticeFormArrValue = [];
+    var noticeFormArrValues = [];
 
     form.querySelectorAll('[name]').forEach(function (value) {
       var valueCurent = {};
@@ -58,9 +58,9 @@
           break;
         default:
       }
-      noticeFormArrValue.push(valueCurent);
+      noticeFormArrValues.push(valueCurent);
     });
-    return noticeFormArrValue;
+    return noticeFormArrValues;
   };
 
   window.util = {
