@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var MAX_PINS = 5;
   var offers = [];
 
   var price = {
@@ -28,9 +29,7 @@
   };
 
   var addOffers = function (offersArr) {
-    offersArr.forEach(function (value) {
-      offers.push(value);
-    });
+    offers = offersArr.slice();
   };
 
   var offersSlice = function () {
@@ -47,18 +46,20 @@
         return value.offer.features.indexOf(filtersForOffersId[filterCurrent.id]) > -1;
       });
     } else if (filtersForOffersId[filterCurrent.id] === 'price') {
-      if (filtersForOffersValue[filterCurrent.value] === 'LOW') {
-        return offersCurrent.filter(function (value) {
-          return value.offer.price < price.LOW;
-        });
-      } else if (filtersForOffersValue[filterCurrent.value] === 'HIGH') {
-        return offersCurrent.filter(function (value) {
-          return value.offer.price > price.HIGH;
-        });
-      } else if (filtersForOffersValue[filterCurrent.value] === 'MIDDLE') {
-        return offersCurrent.filter(function (value) {
-          return (value.offer.price <= price.HIGH && value.offer.price >= price.LOW);
-        });
+      switch (filtersForOffersValue[filterCurrent.value]) {
+        case 'LOW':
+          return offersCurrent.filter(function (value) {
+            return value.offer.price < price.LOW;
+          });
+        case 'MIDDLE':
+          return offersCurrent.filter(function (value) {
+            return (value.offer.price <= price.HIGH && value.offer.price >= price.LOW);
+          });
+        case 'HIGH':
+          return offersCurrent.filter(function (value) {
+            return value.offer.price > price.HIGH;
+          });
+        default:
       }
     } else {
       return offersCurrent.filter(function (value) {
@@ -74,7 +75,7 @@
     filters.forEach(function (value) {
       newOffers = filterOffers(newOffers, value);
     });
-    if (newOffers.length > 5) {
+    if (newOffers.length > MAX_PINS) {
       newOffers = newOffers.slice(0, 5);
     }
 
