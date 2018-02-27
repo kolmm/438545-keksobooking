@@ -78,6 +78,7 @@
   window.filters = {
     updatePins: function (offers) {
       updatePins(offers);
-    }
+    },
+    filtersForm: document.querySelector('.map__filters')
   };
 })();

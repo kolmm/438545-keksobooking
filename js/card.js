@@ -30,7 +30,7 @@
     return images;
   };
 
-  window.renderCard = function (card) {
+  var renderCard = function (card) {
     var adCardTemplate = document.querySelector('template').content.querySelector('.map__card');
     var adCard = adCardTemplate.cloneNode(true);
     var popupFeatures = adCard.querySelector('.popup__features');
@@ -57,11 +57,11 @@
     popupPictures.appendChild(createImg(card.offer.photos));
 
     closePopupBtn.addEventListener('click', function () {
-      closeMapCard(adCard);
+      closeMapCard();
     });
 
     document.addEventListener('keydown', function (evt) {
-      onMapCardEscPress(evt, adCard);
+      onMapCardEscPress(evt);
     });
 
     return adCard;
@@ -77,9 +77,14 @@
     document.removeEventListener('keydown', onMapCardEscPress);
   };
 
-  var onMapCardEscPress = function (evt, adCard) {
+  var onMapCardEscPress = function (evt) {
     if (evt.keyCode === ESC_CLICK) {
-      closeMapCard(adCard);
+      closeMapCard();
     }
+  };
+
+  window.card = {
+    renderCard: renderCard,
+    closeMapCard: closeMapCard
   };
 })();

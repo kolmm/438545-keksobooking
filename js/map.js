@@ -9,7 +9,7 @@
   var noticeForm = document.querySelector('.notice__form');
   var fieldSet = noticeForm.querySelectorAll('fieldset');
   var mapPinMain = document.querySelector('.map__pin--main');
-  var mapFilters = document.querySelector('.map__filters');
+  var offers = [];
 
   fieldSet.forEach(function (field) {
     field.disabled = true;
@@ -17,26 +17,34 @@
 
   window.util.setAddress(true);
 
-  var arraySlice = function (array) {
-    return array.slice(0, 5);
+  var arraySlice = function (array, start, end) {
+    return array.slice(start, end);
   };
 
-  var makePageActive = function (data) {
-    // window.data.addOffers(data);
+  var onSuccess = function (data) {
+    offers = data.slice();
+    window.renderPins(arraySlice(offers, 0, 5));
+
+    return offers;
+  };
+
+  window.filters.filtersForm.addEventListener('change', function () {
+    window.card.closeMapCard();
+    window.debounce(window.filters.updatePins(offers));
+  });
+
+  var makePageActive = function () {
     map.classList.remove('map--faded');
     noticeForm.classList.remove('notice__form--disabled');
     fieldSet.forEach(function (field) {
       field.disabled = false;
     });
-    window.renderPins(arraySlice(data));
-    mapFilters.addEventListener('change', function () {
-      window.debounce(window.filters.updatePins(data));
-    });
   };
 
   var onMapClick = function () {
     if (map.classList.contains('map--faded')) {
-      window.load('https://js.dump.academy/keksobooking/data', 'GET', '', makePageActive);
+      window.load('https://js.dump.academy/keksobooking/data', 'GET', '', onSuccess);
+      makePageActive();
       window.util.disableCapacity();
       window.util.makeMinPrice();
       window.util.capacity.options[2].selected = true;
