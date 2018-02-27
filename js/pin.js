@@ -51,14 +51,4 @@
       mapPins.appendChild(makePin(object));
     });
   };
-
-  var mapFilters = document.querySelector('.map__filters');
-
-  var changeFilter = function () {
-    window.renderPins(window.data.getOffers(window.util.getNoticeFormValue(mapFilters)));
-  };
-
-  mapFilters.addEventListener('change', function () {
-    window.debounce(changeFilter);
-  });
 })();

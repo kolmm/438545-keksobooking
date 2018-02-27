@@ -9,6 +9,7 @@
   var noticeForm = document.querySelector('.notice__form');
   var fieldSet = noticeForm.querySelectorAll('fieldset');
   var mapPinMain = document.querySelector('.map__pin--main');
+  var mapFilters = document.querySelector('.map__filters');
 
   fieldSet.forEach(function (field) {
     field.disabled = true;
@@ -16,14 +17,21 @@
 
   window.util.setAddress(true);
 
+  var arraySlice = function (array) {
+    return array.slice(0, 5);
+  };
+
   var makePageActive = function (data) {
-    window.data.addOffers(data);
+    // window.data.addOffers(data);
     map.classList.remove('map--faded');
     noticeForm.classList.remove('notice__form--disabled');
     fieldSet.forEach(function (field) {
       field.disabled = false;
     });
-    window.renderPins(window.data.offersSlice());
+    window.renderPins(arraySlice(data));
+    mapFilters.addEventListener('change', function () {
+      window.debounce(window.filters.updatePins(data));
+    });
   };
 
   var onMapClick = function () {
