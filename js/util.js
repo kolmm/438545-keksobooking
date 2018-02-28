@@ -2,7 +2,6 @@
 
 (function () {
   var address = document.querySelector('#address');
-  var mapPinMain = document.querySelector('.map__pin--main');
   var price = document.querySelector('#price');
   var type = document.querySelector('#type');
   var roomNumber = document.querySelector('#room_number');
@@ -20,8 +19,8 @@
   };
 
   var setAddress = function (isInitial) {
-    var x = mapPinMain.offsetLeft;
-    var y = isInitial ? mapPinMain.offsetTop : mapPinMain.offsetTop + mapPinMain.offsetHeight;
+    var x = window.util.mapPinMain.offsetLeft;
+    var y = isInitial ? window.util.mapPinMain.offsetTop : window.util.mapPinMain.offsetTop + window.util.mapPinMain.offsetHeight;
 
     address.value = x + ', ' + y;
   };
@@ -68,6 +67,7 @@
     makeMinPrice: makeMinPrice,
     disableCapacity: disableCapacity,
     capacity: document.querySelector('#capacity'),
-    getNoticeFormValue: getNoticeFormValue
+    getNoticeFormValue: getNoticeFormValue,
+    mapPinMain: document.querySelector('.map__pin--main')
   };
 })();

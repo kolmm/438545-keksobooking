@@ -5,10 +5,7 @@
   var MAIN_PIN_OFFSET_Y = 50;
   var MAIN_PIN_MIN_Y = 150;
   var MAIN_PIN_MAX_Y = 500;
-  var map = document.querySelector('.map');
-  var noticeForm = document.querySelector('.notice__form');
-  var fieldSet = noticeForm.querySelectorAll('fieldset');
-  var mapPinMain = document.querySelector('.map__pin--main');
+  var fieldSet = window.noticeForm.querySelectorAll('fieldset');
   var offers = [];
 
   fieldSet.forEach(function (field) {
@@ -34,15 +31,15 @@
   });
 
   var makePageActive = function () {
-    map.classList.remove('map--faded');
-    noticeForm.classList.remove('notice__form--disabled');
+    window.map.queryMap.classList.remove('map--faded');
+    window.noticeForm.classList.remove('notice__form--disabled');
     fieldSet.forEach(function (field) {
       field.disabled = false;
     });
   };
 
   var onMapClick = function () {
-    if (map.classList.contains('map--faded')) {
+    if (window.map.queryMap.classList.contains('map--faded')) {
       window.load('https://js.dump.academy/keksobooking/data', 'GET', '', onSuccess);
       makePageActive();
       window.util.disableCapacity();
@@ -53,7 +50,7 @@
     window.util.setAddress(false);
   };
 
-  mapPinMain.addEventListener('mouseup', onMapClick);
+  window.util.mapPinMain.addEventListener('mouseup', onMapClick);
 
   var checkCoords = function (coords) {
     var minX = MAIN_PIN_OFFSET_X;
@@ -98,14 +95,14 @@
       };
 
       var newCoords = {
-        x: mapPinMain.offsetLeft - shift.x,
-        y: mapPinMain.offsetTop - shift.y
+        x: window.util.mapPinMain.offsetLeft - shift.x,
+        y: window.util.mapPinMain.offsetTop - shift.y
       };
 
       newCoords = checkCoords(newCoords);
 
-      mapPinMain.style.top = (newCoords.y) + 'px';
-      mapPinMain.style.left = (newCoords.x) + 'px';
+      window.util.mapPinMain.style.top = (newCoords.y) + 'px';
+      window.util.mapPinMain.style.left = (newCoords.x) + 'px';
     };
 
     var onMouseUp = function (upEvt) {
@@ -121,7 +118,11 @@
     document.addEventListener('mouseup', onMouseUp);
   };
 
-  mapPinMain.addEventListener('mousedown', function (evt) {
+  window.util.mapPinMain.addEventListener('mousedown', function (evt) {
     onMapPinMainMouseDown(evt);
   });
+
+  window.map = {
+    queryMap: document.querySelector('.map')
+  };
 })();

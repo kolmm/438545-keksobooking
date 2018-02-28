@@ -6,16 +6,13 @@
     low: 10000,
     high: 50000
   };
-
   var filtersForm = document.querySelector('.map__filters');
 
   var updatePins = function (offers) {
-    // копируем исходный массив, пришедший с сервера
     var filteredOffers = offers.slice();
 
     var selectorFilters = filtersForm.querySelectorAll('select');
     var featuresFilters = filtersForm.querySelectorAll('input[type=checkbox]:checked');
-
     var FilterRules = {
       'housing-type': 'type',
       'housing-rooms': 'rooms',
@@ -47,7 +44,6 @@
       });
     };
 
-    // пробегаем по всем
     if (selectorFilters.length !== null) {
       selectorFilters.forEach(function (item) {
         if (item.value !== 'any') {

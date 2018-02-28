@@ -2,7 +2,6 @@
 
 (function () {
   var ESC_CLICK = 27;
-  var map = document.querySelector('.map');
 
   var deleteChildren = function (el) {
     while (el.hasChildNodes()) {
@@ -68,7 +67,7 @@
   };
 
   var closeMapCard = function () {
-    var popup = map.querySelector('.popup');
+    var popup = window.map.queryMap.querySelector('.popup');
 
     if (popup !== null) {
       popup.parentNode.removeChild(popup);

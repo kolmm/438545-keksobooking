@@ -5,16 +5,15 @@
   var AVATAR_HEIGHT = 40;
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
-  var map = document.querySelector('.map');
 
   var onPinClick = function (evt, pin) {
     var mapFiltersContainer = document.querySelector('.map__filters-container');
-    var adCards = map.querySelectorAll('.map__card');
+    var adCards = window.map.queryMap.querySelectorAll('.map__card');
 
-    map.insertBefore(window.card.renderCard(pin), mapFiltersContainer);
+    window.map.queryMap.insertBefore(window.card.renderCard(pin), mapFiltersContainer);
 
     if (adCards.length) {
-      map.removeChild(adCards[0]);
+      window.map.queryMap.removeChild(adCards[0]);
     }
   };
 
