@@ -1,19 +1,19 @@
 'use strict';
 
 (function () {
-  var noticeForm = document.querySelector('.notice__form');
-  var title = noticeForm.querySelector('#title');
-  var address = noticeForm.querySelector('#address');
-  var type = noticeForm.querySelector('#type');
-  var price = noticeForm.querySelector('#price');
-  var timeIn = noticeForm.querySelector('#timein');
-  var timeout = noticeForm.querySelector('#timeout');
-  var roomNumber = noticeForm.querySelector('#room_number');
-  var description = noticeForm.querySelector('#description');
-  var formResetBtn = noticeForm.querySelector('.form__reset');
-  var noticeFormFeatures = noticeForm.querySelectorAll('.form__element.features input');
+  window.noticeForm = document.querySelector('.notice__form');
+  var title = window.noticeForm.querySelector('#title');
+  var address = window.noticeForm.querySelector('#address');
+  var type = window.noticeForm.querySelector('#type');
+  var price = window.noticeForm.querySelector('#price');
+  var timeIn = window.noticeForm.querySelector('#timein');
+  var timeout = window.noticeForm.querySelector('#timeout');
+  var roomNumber = window.noticeForm.querySelector('#room_number');
+  var description = window.noticeForm.querySelector('#description');
+  var formResetBtn = window.noticeForm.querySelector('.form__reset');
+  var noticeFormFeatures = window.noticeForm.querySelectorAll('.form__element.features input');
 
-  function makeOriginState() {
+  var makeOriginState = function () {
     title.value = '';
     price.value = '';
     price.min = 0;
@@ -22,17 +22,17 @@
     noticeFormFeatures.forEach(function (feature) {
       feature.checked = false;
     });
-  }
+  };
 
-  function addAttribute(element, name, value) {
+  var addAttribute = function (element, name, value) {
     element.setAttribute(name, value);
-  }
+  };
 
   title.required = true;
   price.required = true;
   price.max = 1000000;
 
-  addAttribute(noticeForm, 'action', 'https://js.dump.academy/keksobooking');
+  addAttribute(window.noticeForm, 'action', 'https://js.dump.academy/keksobooking');
   addAttribute(title, 'minlength', 30);
   addAttribute(title, 'maxlength', 100);
   addAttribute(address, 'readonly', true);
@@ -53,7 +53,7 @@
     window.util.disableCapacity();
   });
 
-  noticeForm.addEventListener('invalid', function (evt) {
+  window.noticeForm.addEventListener('invalid', function (evt) {
     evt.target.style.borderColor = 'red';
   }, true);
 
@@ -64,20 +64,20 @@
     window.util.setAddress(true);
   });
 
-  function onSuccess() {
+  var onSuccess = function () {
     makeOriginState();
-  }
+  };
 
-  function onError(response) {
+  var onError = function (response) {
     var errorMessage = document.createElement('div');
 
     errorMessage.classList.add('error-message');
     errorMessage.textContent = 'Произошла ошибка:' + ' ' + response;
-    document.querySelector('.notice').insertBefore(errorMessage, noticeForm);
-  }
+    document.querySelector('.notice').insertBefore(errorMessage, window.noticeForm);
+  };
 
-  noticeForm.addEventListener('submit', function (evt) {
-    window.load('https://js.dump.academy/keksobooking', 'POST', new FormData(noticeForm), onSuccess, onError);
+  window.noticeForm.addEventListener('submit', function (evt) {
+    window.load('https://js.dump.academy/keksobooking', 'POST', new FormData(window.noticeForm), onSuccess, onError);
     evt.preventDefault();
   });
 })();

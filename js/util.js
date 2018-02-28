@@ -2,7 +2,6 @@
 
 (function () {
   var address = document.querySelector('#address');
-  var mapPinMain = document.querySelector('.map__pin--main');
   var price = document.querySelector('#price');
   var type = document.querySelector('#type');
   var roomNumber = document.querySelector('#room_number');
@@ -19,31 +18,56 @@
     'palace': 10000
   };
 
-  function setAddress(isInitial) {
-    var x = mapPinMain.offsetLeft;
-    var y = isInitial ? mapPinMain.offsetTop : mapPinMain.offsetTop + mapPinMain.offsetHeight;
+  var setAddress = function (isInitial) {
+    var x = window.util.mapPinMain.offsetLeft;
+    var y = isInitial ? window.util.mapPinMain.offsetTop : window.util.mapPinMain.offsetTop + window.util.mapPinMain.offsetHeight;
 
     address.value = x + ', ' + y;
-  }
+  };
 
-  function makeMinPrice() {
+  var makeMinPrice = function () {
     price.min = typeToPrice[type.value];
     price.placeholder = typeToPrice[type.value];
-  }
+  };
 
-  function disableCapacity() {
+  var disableCapacity = function () {
     var capacityOption = window.util.capacity.querySelectorAll('option');
     var capacityValues = roomToCapacity[roomNumber.value];
 
     capacityOption.forEach(function (option) {
       option.disabled = !capacityValues.includes(option.value);
     });
-  }
+  };
+
+  var getNoticeFormValue = function (form) {
+    var noticeFormArrValues = [];
+
+    form.querySelectorAll('[name]').forEach(function (value) {
+      var valueCurent = {};
+      switch (value.tagName.toLocaleLowerCase()) {
+        case 'input':
+          if (value.type === 'checkbox') {
+            valueCurent = {id: value.id, value: value.checked};
+          } else {
+            valueCurent = {id: value.id, value: value.value};
+          }
+          break;
+        case 'select':
+          valueCurent = {id: value.id, value: value.value};
+          break;
+        default:
+      }
+      noticeFormArrValues.push(valueCurent);
+    });
+    return noticeFormArrValues;
+  };
 
   window.util = {
     setAddress: setAddress,
     makeMinPrice: makeMinPrice,
     disableCapacity: disableCapacity,
-    capacity: document.querySelector('#capacity')
+    capacity: document.querySelector('#capacity'),
+    getNoticeFormValue: getNoticeFormValue,
+    mapPinMain: document.querySelector('.map__pin--main')
   };
 })();

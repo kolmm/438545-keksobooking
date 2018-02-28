@@ -3,28 +3,29 @@
 (function () {
   var AVATAR_WIDTH = 40;
   var AVATAR_HEIGHT = 40;
-  var map = document.querySelector('.map');
+  var PIN_WIDTH = 50;
+  var PIN_HEIGHT = 70;
 
-  function onPinClick(evt, pin) {
-    var mapFilters = document.querySelector('.map__filters-container');
-    var adCards = map.querySelectorAll('.map__card');
+  var onPinClick = function (evt, pin) {
+    var mapFiltersContainer = document.querySelector('.map__filters-container');
+    var adCards = window.map.queryMap.querySelectorAll('.map__card');
 
-    map.insertBefore(window.renderCard(pin), mapFilters);
+    window.map.queryMap.insertBefore(window.card.renderCard(pin), mapFiltersContainer);
 
     if (adCards.length) {
-      map.removeChild(adCards[0]);
+      window.map.queryMap.removeChild(adCards[0]);
     }
-  }
+  };
 
-  window.makePin = function (pin) {
+  var makePin = function (pin) {
     var pinTemplate = document.querySelector('template').content.querySelector('.map__pin');
     var mapPin = pinTemplate.cloneNode(true);
     var fragment = document.createDocumentFragment();
     var imgPin = mapPin.querySelector('img');
 
     mapPin.className = 'map__pin';
-    mapPin.style.left = pin.location.x - 50 / 2 + 'px';
-    mapPin.style.top = pin.location.y - 70 + 'px';
+    mapPin.style.left = pin.location.x - PIN_WIDTH / 2 + 'px';
+    mapPin.style.top = pin.location.y - PIN_HEIGHT + 'px';
     imgPin.width = AVATAR_WIDTH;
     imgPin.height = AVATAR_HEIGHT;
     imgPin.src = pin.author.avatar;
@@ -39,20 +40,14 @@
     return fragment;
   };
 
-  function renderPins(data) {
+  window.renderPins = function (data) {
     var mapPins = document.querySelector('.map__pins');
 
-    data.forEach(function (object) {
-      mapPins.appendChild(window.makePin(object));
+    mapPins.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (value) {
+      value.remove();
     });
-  }
-
-  window.getPins = function () {
-    var onSuccess = function (data) {
-
-      renderPins(data);
-    };
-
-    window.load('https://js.dump.academy/keksobooking/data', 'GET', '', onSuccess);
+    data.forEach(function (object) {
+      mapPins.appendChild(makePin(object));
+    });
   };
 })();
