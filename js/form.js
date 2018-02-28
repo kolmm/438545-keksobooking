@@ -53,7 +53,7 @@
     window.util.disableCapacity();
   });
 
-  noticeForm.addEventListener('invalid', function (evt) {
+  window.noticeForm.addEventListener('invalid', function (evt) {
     evt.target.style.borderColor = 'red';
   }, true);
 
