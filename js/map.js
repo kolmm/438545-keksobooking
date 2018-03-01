@@ -5,14 +5,14 @@
   var MAIN_PIN_OFFSET_Y = 50;
   var MAIN_PIN_MIN_Y = 150;
   var MAIN_PIN_MAX_Y = 500;
-  var fieldSet = window.noticeForm.querySelectorAll('fieldset');
+  var fieldSet = window.form.noticeForm.querySelectorAll('fieldset');
   var offers = [];
 
   fieldSet.forEach(function (field) {
     field.disabled = true;
   });
 
-  window.util.setAddress(true);
+  window.form.setAddress(true);
 
   var arraySlice = function (array, start, end) {
     return array.slice(start, end);
@@ -32,7 +32,7 @@
 
   var makePageActive = function () {
     window.map.queryMap.classList.remove('map--faded');
-    window.noticeForm.classList.remove('notice__form--disabled');
+    window.form.noticeForm.classList.remove('notice__form--disabled');
     fieldSet.forEach(function (field) {
       field.disabled = false;
     });
@@ -40,7 +40,7 @@
 
   var makePageInActive = function () {
     window.map.queryMap.classList.add('map--faded');
-    window.noticeForm.classList.add('notice__form--disabled');
+    window.form.noticeForm.classList.add('notice__form--disabled');
     fieldSet.forEach(function (field) {
       field.disabled = true;
     });
@@ -50,12 +50,12 @@
     if (window.map.queryMap.classList.contains('map--faded')) {
       window.load('https://js.dump.academy/keksobooking/data', 'GET', '', onSuccess);
       makePageActive();
-      window.util.disableCapacity();
-      window.util.makeMinPrice();
-      window.util.capacity.options[2].selected = true;
+      window.form.disableCapacity();
+      window.form.makeMinPrice();
+      window.form.capacity.options[2].selected = true;
     }
 
-    window.util.setAddress(false);
+    window.form.setAddress(false);
   };
 
   window.util.mapPinMain.addEventListener('mouseup', onMapClick);
@@ -116,7 +116,7 @@
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
-      window.util.setAddress(false);
+      window.form.setAddress(false);
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
@@ -132,6 +132,7 @@
 
   window.map = {
     queryMap: document.querySelector('.map'),
+
     movePinToInitial: function () {
       window.util.mapPinMain.style.left = '';
       window.util.mapPinMain.style.top = '';
