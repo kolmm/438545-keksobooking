@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var MAX_PINS = 5;
   var PRICES_TO_COMPARE = {
     low: 10000,
     high: 50000
@@ -62,12 +61,12 @@
       });
     }
 
-    if (filteredOffers.length > MAX_PINS) {
-      filteredOffers = filteredOffers.slice(0, MAX_PINS);
+    if (filteredOffers.length > window.filters.MAX_PINS) {
+      filteredOffers = filteredOffers.slice(0, window.filters.MAX_PINS);
     }
 
     if (filteredOffers.length) {
-      window.renderPins(filteredOffers);
+      window.pin.renderPins(filteredOffers);
     }
   };
 
@@ -75,6 +74,7 @@
     updatePins: function (offers) {
       updatePins(offers);
     },
-    filtersForm: document.querySelector('.map__filters')
+    filtersForm: document.querySelector('.map__filters'),
+    MAX_PINS: 5
   };
 })();

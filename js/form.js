@@ -22,6 +22,10 @@
     noticeFormFeatures.forEach(function (feature) {
       feature.checked = false;
     });
+    window.map.movePinToInitial();
+    window.card.closeMapCard();
+    window.pin.removePins();
+    window.map.makePageInActive();
   };
 
   var addAttribute = function (element, name, value) {
@@ -66,6 +70,7 @@
 
   var onSuccess = function () {
     makeOriginState();
+    window.util.setAddress(true);
   };
 
   var onError = function (response) {
@@ -74,6 +79,10 @@
     errorMessage.classList.add('error-message');
     errorMessage.textContent = 'Произошла ошибка:' + ' ' + response;
     document.querySelector('.notice').insertBefore(errorMessage, window.noticeForm);
+
+    setTimeout(function () {
+      errorMessage.remove();
+    }, 5000);
   };
 
   window.noticeForm.addEventListener('submit', function (evt) {

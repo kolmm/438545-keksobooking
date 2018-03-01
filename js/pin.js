@@ -40,14 +40,24 @@
     return fragment;
   };
 
-  window.renderPins = function (data) {
+  var removePins = function () {
     var mapPins = document.querySelector('.map__pins');
 
     mapPins.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (value) {
       value.remove();
     });
+  };
+
+  var renderPins = function (data) {
+    var mapPins = document.querySelector('.map__pins');
+    removePins();
     data.forEach(function (object) {
       mapPins.appendChild(makePin(object));
     });
+  };
+
+  window.pin = {
+    removePins: removePins,
+    renderPins: renderPins
   };
 })();

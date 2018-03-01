@@ -20,7 +20,7 @@
 
   var onSuccess = function (data) {
     offers = data.slice();
-    window.renderPins(arraySlice(offers, 0, 5));
+    window.pin.renderPins(arraySlice(offers, 0, window.filters.MAX_PINS));
 
     return offers;
   };
@@ -35,6 +35,14 @@
     window.noticeForm.classList.remove('notice__form--disabled');
     fieldSet.forEach(function (field) {
       field.disabled = false;
+    });
+  };
+
+  var makePageInActive = function () {
+    window.map.queryMap.classList.add('map--faded');
+    window.noticeForm.classList.add('notice__form--disabled');
+    fieldSet.forEach(function (field) {
+      field.disabled = true;
     });
   };
 
@@ -123,6 +131,11 @@
   });
 
   window.map = {
-    queryMap: document.querySelector('.map')
+    queryMap: document.querySelector('.map'),
+    movePinToInitial: function () {
+      window.util.mapPinMain.style.left = '';
+      window.util.mapPinMain.style.top = '';
+    },
+    makePageInActive: makePageInActive
   };
 })();
