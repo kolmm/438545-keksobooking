@@ -11,6 +11,7 @@
   var timeout = noticeForm.querySelector('#timeout');
   var roomNumber = noticeForm.querySelector('#room_number');
   var formResetBtn = noticeForm.querySelector('.form__reset');
+  var mapPinMain = document.querySelector('.map__pin--main');
   var roomToCapacity = {
     '1': ['1'],
     '2': ['1', '2'],
@@ -25,8 +26,8 @@
   };
 
   var setAddress = function (isInitial) {
-    var x = window.util.mapPinMain.offsetLeft;
-    var y = isInitial ? window.util.mapPinMain.offsetTop : window.util.mapPinMain.offsetTop + window.util.mapPinMain.offsetHeight;
+    var x = mapPinMain.offsetLeft;
+    var y = isInitial ? mapPinMain.offsetTop : mapPinMain.offsetTop + mapPinMain.offsetHeight;
 
     address.value = x + ', ' + y;
   };
@@ -124,6 +125,7 @@
     setAddress: setAddress,
     makeMinPrice: makeMinPrice,
     capacity: document.querySelector('#capacity'),
+    mapPinMain: mapPinMain,
     disableCapacity: disableCapacity
   };
 })();
