@@ -1,31 +1,61 @@
 'use strict';
 
 (function () {
-  window.noticeForm = document.querySelector('.notice__form');
-  var title = window.noticeForm.querySelector('#title');
-  var address = window.noticeForm.querySelector('#address');
-  var type = window.noticeForm.querySelector('#type');
-  var price = window.noticeForm.querySelector('#price');
-  var timeIn = window.noticeForm.querySelector('#timein');
-  var timeout = window.noticeForm.querySelector('#timeout');
-  var roomNumber = window.noticeForm.querySelector('#room_number');
-  var description = window.noticeForm.querySelector('#description');
-  var formResetBtn = window.noticeForm.querySelector('.form__reset');
-  var noticeFormFeatures = window.noticeForm.querySelectorAll('.form__element.features input');
+  var TIME_TO_DEL_ERROR = 5000;
+  var noticeForm = document.querySelector('.notice__form');
+  var title = noticeForm.querySelector('#title');
+  var address = noticeForm.querySelector('#address');
+  var type = noticeForm.querySelector('#type');
+  var price = noticeForm.querySelector('#price');
+  var timeIn = noticeForm.querySelector('#timein');
+  var timeout = noticeForm.querySelector('#timeout');
+  var roomNumber = noticeForm.querySelector('#room_number');
+  var formResetBtn = noticeForm.querySelector('.form__reset');
+  var mapPinMain = document.querySelector('.map__pin--main');
+  var roomToCapacity = {
+    '1': ['1'],
+    '2': ['1', '2'],
+    '3': ['1', '2', '3'],
+    '100': ['0']
+  };
+  var typeToPrice = {
+    'bungalo': 0,
+    'flat': 1000,
+    'house': 5000,
+    'palace': 10000
+  };
+
+  var setAddress = function (isInitial) {
+    var x = mapPinMain.offsetLeft;
+    var y = isInitial ? mapPinMain.offsetTop : mapPinMain.offsetTop + mapPinMain.offsetHeight;
+
+    address.value = x + ', ' + y;
+  };
+
+  var makeMinPrice = function () {
+    price.min = typeToPrice[type.value];
+    price.placeholder = typeToPrice[type.value];
+  };
+
+  var disableCapacity = function () {
+    var capacityOption = window.form.capacity.querySelectorAll('option');
+    var capacityValues = roomToCapacity[roomNumber.value];
+
+    capacityOption.forEach(function (option) {
+      option.disabled = !capacityValues.includes(option.value);
+    });
+  };
 
   var makeOriginState = function () {
-    title.value = '';
-    price.value = '';
+    noticeForm.reset();
+    window.form.capacity.options[2].selected = true;
     price.min = 0;
     price.placeholder = 5000;
-    description.value = '';
-    noticeFormFeatures.forEach(function (feature) {
-      feature.checked = false;
-    });
     window.map.movePinToInitial();
     window.card.closeMapCard();
     window.pin.removePins();
     window.map.makePageInActive();
+    disableCapacity();
   };
 
   var addAttribute = function (element, name, value) {
@@ -36,13 +66,13 @@
   price.required = true;
   price.max = 1000000;
 
-  addAttribute(window.noticeForm, 'action', 'https://js.dump.academy/keksobooking');
+  addAttribute(noticeForm, 'action', 'https://js.dump.academy/keksobooking');
   addAttribute(title, 'minlength', 30);
   addAttribute(title, 'maxlength', 100);
   addAttribute(address, 'readonly', true);
 
   type.addEventListener('change', function () {
-    window.util.makeMinPrice();
+    makeMinPrice();
   });
 
   timeIn.addEventListener('change', function (evt) {
@@ -54,10 +84,10 @@
   });
 
   roomNumber.addEventListener('change', function () {
-    window.util.disableCapacity();
+    disableCapacity();
   });
 
-  window.noticeForm.addEventListener('invalid', function (evt) {
+  noticeForm.addEventListener('invalid', function (evt) {
     evt.target.style.borderColor = 'red';
   }, true);
 
@@ -65,12 +95,12 @@
     evt.preventDefault();
 
     makeOriginState();
-    window.util.setAddress(true);
+    setAddress(true);
   });
 
   var onSuccess = function () {
     makeOriginState();
-    window.util.setAddress(true);
+    setAddress(true);
   };
 
   var onError = function (response) {
@@ -78,15 +108,24 @@
 
     errorMessage.classList.add('error-message');
     errorMessage.textContent = 'Произошла ошибка:' + ' ' + response;
-    document.querySelector('.notice').insertBefore(errorMessage, window.noticeForm);
+    document.querySelector('.notice').insertBefore(errorMessage, noticeForm);
 
     setTimeout(function () {
       errorMessage.remove();
-    }, 5000);
+    }, TIME_TO_DEL_ERROR);
   };
 
-  window.noticeForm.addEventListener('submit', function (evt) {
-    window.load('https://js.dump.academy/keksobooking', 'POST', new FormData(window.noticeForm), onSuccess, onError);
+  noticeForm.addEventListener('submit', function (evt) {
+    window.load('https://js.dump.academy/keksobooking', 'POST', new FormData(noticeForm), onSuccess, onError);
     evt.preventDefault();
   });
+
+  window.form = {
+    noticeForm: noticeForm,
+    setAddress: setAddress,
+    makeMinPrice: makeMinPrice,
+    capacity: document.querySelector('#capacity'),
+    mapPinMain: mapPinMain,
+    disableCapacity: disableCapacity
+  };
 })();
