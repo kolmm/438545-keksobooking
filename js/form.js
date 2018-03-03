@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var TIME_TO_DEL_ERROR = 5000;
+  var CREATE_BOOKING_URL ='https://js.dump.academy/keksobooking';
   var noticeForm = document.querySelector('.notice__form');
   var title = noticeForm.querySelector('#title');
   var address = noticeForm.querySelector('#address');
@@ -52,8 +52,8 @@
     price.min = 0;
     price.placeholder = 5000;
     window.map.movePinToInitial();
-    window.card.closeMapCard();
-    window.pin.removePins();
+    window.card.close();
+    window.pin.removeAll();
     window.map.makePageInActive();
     disableCapacity();
   };
@@ -111,18 +111,18 @@
     window.scrollTo(0, 0);
     document.body.insertAdjacentElement('afterbegin', errorMessage);
 
-    setTimeout(function () {
+    window.debounce(function () {
       errorMessage.remove();
-    }, TIME_TO_DEL_ERROR);
+    }, 5000);
   };
 
   noticeForm.addEventListener('submit', function (evt) {
-    window.load('https://js.dump.academy/keksobooking', 'POST', new FormData(noticeForm), onSuccess, onError);
+    window.backend.request(CREATE_BOOKING_URL, 'POST', new FormData(noticeForm), onSuccess, onError);
     evt.preventDefault();
   });
 
   window.form = {
-    noticeForm: noticeForm,
+    find: noticeForm,
     setAddress: setAddress,
     makeMinPrice: makeMinPrice,
     capacity: document.querySelector('#capacity'),

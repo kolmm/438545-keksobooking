@@ -6,13 +6,13 @@
     low: 10000,
     high: 50000
   };
-  var filtersForm = document.querySelector('.map__filters');
+  var findForm = document.querySelector('.map__filters');
 
   var updatePins = function (offers) {
     var filteredOffers = offers.slice();
 
-    var selectorFilters = filtersForm.querySelectorAll('select');
-    var featuresFilters = filtersForm.querySelectorAll('input[type=checkbox]:checked');
+    var selectorFilters = findForm.querySelectorAll('select');
+    var featuresFilters = findForm.querySelectorAll('input[type=checkbox]:checked');
     var FilterRules = {
       'housing-type': 'type',
       'housing-rooms': 'rooms',
@@ -62,20 +62,20 @@
       });
     }
 
-    if (filteredOffers.length > window.filters.MAX_PINS) {
-      filteredOffers = filteredOffers.slice(0, window.filters.MAX_PINS);
+    if (filteredOffers.length > window.filter.MAX_PINS) {
+      filteredOffers = filteredOffers.slice(0, window.filter.MAX_PINS);
     }
 
     if (filteredOffers.length) {
-      window.pin.renderPins(filteredOffers);
+      window.pin.renderAll(filteredOffers);
     }
   };
 
-  window.filters = {
+  window.filter = {
     updatePins: function (offers) {
       updatePins(offers);
     },
-    filtersForm: filtersForm,
+    find: findForm,
     MAX_PINS: MAX_PINS
   };
 })();

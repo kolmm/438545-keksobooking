@@ -72,7 +72,7 @@
   };
 
   var closeMapCard = function () {
-    var popup = window.map.queryMap.querySelector('.popup');
+    var popup = window.map.find.querySelector('.popup');
 
     if (popup !== null) {
       popup.parentNode.removeChild(popup);
@@ -88,7 +88,7 @@
   };
 
   window.card = {
-    renderCard: renderCard,
-    closeMapCard: closeMapCard
+    render: renderCard,
+    close: closeMapCard
   };
 })();
