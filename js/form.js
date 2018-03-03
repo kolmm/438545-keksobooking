@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var CREATE_BOOKING_URL ='https://js.dump.academy/keksobooking';
+  var CREATE_BOOKING_URL = 'https://js.dump.academy/keksobooking';
   var noticeForm = document.querySelector('.notice__form');
   var title = noticeForm.querySelector('#title');
   var address = noticeForm.querySelector('#address');
