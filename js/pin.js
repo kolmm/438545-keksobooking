@@ -5,6 +5,7 @@
   var AVATAR_HEIGHT = 40;
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
+  var mapPins = document.querySelector('.map__pins');
 
   var onPinClick = function (evt, pin) {
     var mapFiltersContainer = document.querySelector('.map__filters-container');
@@ -20,7 +21,6 @@
   var makePin = function (pin) {
     var pinTemplate = document.querySelector('template').content.querySelector('.map__pin');
     var mapPin = pinTemplate.cloneNode(true);
-    var fragment = document.createDocumentFragment();
     var imgPin = mapPin.querySelector('img');
 
     mapPin.className = 'map__pin';
@@ -31,29 +31,28 @@
     imgPin.src = pin.author.avatar;
 
     mapPin.appendChild(imgPin);
-    fragment.appendChild(mapPin);
 
     mapPin.addEventListener('click', function (evt) {
       onPinClick(evt, pin);
     });
 
-    return fragment;
+    return mapPin;
   };
 
   var removePins = function () {
-    var mapPins = document.querySelector('.map__pins');
-
     mapPins.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (value) {
       value.remove();
     });
   };
 
-  var renderPins = function (data) {
-    var mapPins = document.querySelector('.map__pins');
+  var renderPins = function (pins) {
+    var fragment = document.createDocumentFragment();
+
     removePins();
-    data.forEach(function (object) {
-      mapPins.appendChild(makePin(object));
+    pins.forEach(function (pin) {
+      fragment.appendChild(makePin(pin));
     });
+    mapPins.appendChild(fragment);
   };
 
   window.pin = {

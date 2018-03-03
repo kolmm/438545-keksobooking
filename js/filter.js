@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var MAX_PINS = 5;
   var PRICES_TO_COMPARE = {
     low: 10000,
     high: 50000
@@ -74,7 +75,7 @@
     updatePins: function (offers) {
       updatePins(offers);
     },
-    filtersForm: document.querySelector('.map__filters'),
-    MAX_PINS: 5
+    filtersForm: filtersForm,
+    MAX_PINS: MAX_PINS
   };
 })();

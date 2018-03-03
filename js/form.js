@@ -41,6 +41,7 @@
     var capacityOption = window.form.capacity.querySelectorAll('option');
     var capacityValues = roomToCapacity[roomNumber.value];
 
+    window.form.capacity.querySelector('[value="' + capacityValues[0] + '"]').selected = true;
     capacityOption.forEach(function (option) {
       option.disabled = !capacityValues.includes(option.value);
     });
@@ -48,7 +49,6 @@
 
   var makeOriginState = function () {
     noticeForm.reset();
-    window.form.capacity.options[2].selected = true;
     price.min = 0;
     price.placeholder = 5000;
     window.map.movePinToInitial();
@@ -108,7 +108,8 @@
 
     errorMessage.classList.add('error-message');
     errorMessage.textContent = 'Произошла ошибка:' + ' ' + response;
-    document.querySelector('.notice').insertBefore(errorMessage, noticeForm);
+    window.scrollTo(0, 0);
+    document.body.insertAdjacentElement('afterbegin', errorMessage);
 
     setTimeout(function () {
       errorMessage.remove();
@@ -126,6 +127,7 @@
     makeMinPrice: makeMinPrice,
     capacity: document.querySelector('#capacity'),
     mapPinMain: mapPinMain,
-    disableCapacity: disableCapacity
+    disableCapacity: disableCapacity,
+    onError: onError
   };
 })();
