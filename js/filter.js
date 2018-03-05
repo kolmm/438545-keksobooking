@@ -8,9 +8,8 @@
   };
   var findForm = document.querySelector('.map__filters');
 
-  var updatePins = function (offers) {
-    var filteredOffers = offers.slice();
-
+  var updatePins = function () {
+    var filteredOffers = window.map.offers().slice();
     var selectorFilters = findForm.querySelectorAll('select');
     var featuresFilters = findForm.querySelectorAll('input[type=checkbox]:checked');
     var FilterRules = {
@@ -71,11 +70,13 @@
     }
   };
 
+  findForm.addEventListener('change', function () {
+    window.card.close();
+    window.debounce(updatePins(), 500);
+  });
+
   window.filter = {
-    updatePins: function (offers) {
-      updatePins(offers);
-    },
-    find: findForm,
+    updatePins: updatePins,
     MAX_PINS: MAX_PINS
   };
 })();

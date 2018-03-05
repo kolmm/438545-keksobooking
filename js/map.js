@@ -25,11 +25,6 @@
     window.pin.renderAll(arraySlice(offers, 0, window.filter.MAX_PINS));
   };
 
-  window.filter.find.addEventListener('change', function () {
-    window.card.close();
-    window.debounce(window.filter.updatePins(offers), 500);
-  });
-
   var makePageActive = function () {
     findMap.classList.remove('map--faded');
     window.form.find.classList.remove('notice__form--disabled');
@@ -135,6 +130,9 @@
       window.form.mapPinMain.style.left = '';
       window.form.mapPinMain.style.top = '';
     },
-    makePageInActive: makePageInActive
+    makePageInActive: makePageInActive,
+    offers: function () {
+      return offers;
+    }
   };
 })();
