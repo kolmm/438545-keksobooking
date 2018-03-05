@@ -23,8 +23,6 @@
   var onSuccess = function (data) {
     offers = data.slice();
     window.pin.renderAll(arraySlice(offers, 0, window.filter.MAX_PINS));
-
-    return offers;
   };
 
   window.filter.find.addEventListener('change', function () {
