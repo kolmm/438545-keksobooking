@@ -2,6 +2,7 @@
 
 (function () {
   var ESC_CLICK = 27;
+  var SYMBOL_OF_RUBLE = String.fromCharCode(8381);
 
   var deleteChildren = function (el) {
     while (el.hasChildNodes()) {
@@ -9,24 +10,28 @@
     }
   };
 
-  var createFeatures = function (data) {
-    var features = document.createDocumentFragment();
-    for (var i = 0; i < data.length; i++) {
-      var feature = document.createElement('li');
-      feature.classList.add('feature', 'feature--' + data[i]);
-      features.appendChild(feature);
-    }
-    return features;
+  var createFeatures = function (features) {
+    var fragment = document.createDocumentFragment();
+
+    features.forEach(function (feature) {
+      var featureItem = document.createElement('li');
+      featureItem.classList.add('feature', 'feature--' + feature);
+      fragment.appendChild(featureItem);
+    });
+
+    return fragment;
   };
 
-  var createImg = function (data) {
-    var images = document.createDocumentFragment();
-    for (var i = 0; i < data.length; i++) {
-      var image = document.createElement('li');
-      image.innerHTML = '<img src="' + data[i] + '" height="40">';
-      images.appendChild(image);
-    }
-    return images;
+  var createImg = function (images) {
+    var fragment = document.createDocumentFragment();
+
+    images.forEach(function (image) {
+      var imageItem = document.createElement('li');
+      imageItem.innerHTML = '<img src="' + image + '" height="40">';
+      fragment.appendChild(imageItem);
+    });
+
+    return fragment;
   };
 
   var renderCard = function (card) {
@@ -46,7 +51,7 @@
 
     adCard.querySelector('h3').textContent = card.offer.title;
     adCard.querySelector('small').textContent = card.offer.address;
-    adCard.querySelector('.popup__price').innerHtml = card.offer.price + '&#x20bd;/ночь';
+    adCard.querySelector('.popup__price').textContent = card.offer.price + ' ' + SYMBOL_OF_RUBLE + '/ночь';
     adCard.querySelector('h4').textContent = homeType[card.offer.type].ru;
     adCard.querySelector('.popup__company').textContent = card.offer.rooms + ' комнаты для ' + card.offer.guests + ' гостей';
     adCard.querySelector('.popup__size').textContent = 'Заезд после ' + card.offer.checkin + ',' + 'выезд до ' + card.offer.checkout;
@@ -67,7 +72,7 @@
   };
 
   var closeMapCard = function () {
-    var popup = window.map.queryMap.querySelector('.popup');
+    var popup = window.map.find.querySelector('.popup');
 
     if (popup !== null) {
       popup.parentNode.removeChild(popup);
@@ -83,7 +88,7 @@
   };
 
   window.card = {
-    renderCard: renderCard,
-    closeMapCard: closeMapCard
+    render: renderCard,
+    close: closeMapCard
   };
 })();

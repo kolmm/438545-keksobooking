@@ -1,17 +1,17 @@
 'use strict';
 
 (function () {
+  var MAX_PINS = 5;
   var PRICES_TO_COMPARE = {
     low: 10000,
     high: 50000
   };
-  var filtersForm = document.querySelector('.map__filters');
+  var findForm = document.querySelector('.map__filters');
 
-  var updatePins = function (offers) {
-    var filteredOffers = offers.slice();
-
-    var selectorFilters = filtersForm.querySelectorAll('select');
-    var featuresFilters = filtersForm.querySelectorAll('input[type=checkbox]:checked');
+  var updatePins = function () {
+    var filteredOffers = window.map.offers().slice();
+    var selectorFilters = findForm.querySelectorAll('select');
+    var featuresFilters = findForm.querySelectorAll('input[type=checkbox]:checked');
     var FilterRules = {
       'housing-type': 'type',
       'housing-rooms': 'rooms',
@@ -61,20 +61,22 @@
       });
     }
 
-    if (filteredOffers.length > window.filters.MAX_PINS) {
-      filteredOffers = filteredOffers.slice(0, window.filters.MAX_PINS);
+    if (filteredOffers.length > window.filter.MAX_PINS) {
+      filteredOffers = filteredOffers.slice(0, window.filter.MAX_PINS);
     }
 
     if (filteredOffers.length) {
-      window.pin.renderPins(filteredOffers);
+      window.pin.renderAll(filteredOffers);
     }
   };
 
-  window.filters = {
-    updatePins: function (offers) {
-      updatePins(offers);
-    },
-    filtersForm: document.querySelector('.map__filters'),
-    MAX_PINS: 5
+  findForm.addEventListener('change', function () {
+    window.card.close();
+    window.debounce(updatePins(), 500);
+  });
+
+  window.filter = {
+    updatePins: updatePins,
+    MAX_PINS: MAX_PINS
   };
 })();

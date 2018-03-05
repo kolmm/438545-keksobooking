@@ -5,7 +5,9 @@
   var MAIN_PIN_OFFSET_Y = 50;
   var MAIN_PIN_MIN_Y = 150;
   var MAIN_PIN_MAX_Y = 500;
-  var fieldSet = window.form.noticeForm.querySelectorAll('fieldset');
+  var BOOKINGS_URL = 'https://js.dump.academy/keksobooking/data';
+  var findMap = document.querySelector('.map');
+  var fieldSet = window.form.find.querySelectorAll('fieldset');
   var offers = [];
 
   fieldSet.forEach(function (field) {
@@ -20,39 +22,31 @@
 
   var onSuccess = function (data) {
     offers = data.slice();
-    window.pin.renderPins(arraySlice(offers, 0, window.filters.MAX_PINS));
-
-    return offers;
+    window.pin.renderAll(arraySlice(offers, 0, window.filter.MAX_PINS));
   };
 
-  window.filters.filtersForm.addEventListener('change', function () {
-    window.card.closeMapCard();
-    window.debounce(window.filters.updatePins(offers));
-  });
-
   var makePageActive = function () {
-    window.map.queryMap.classList.remove('map--faded');
-    window.form.noticeForm.classList.remove('notice__form--disabled');
+    findMap.classList.remove('map--faded');
+    window.form.find.classList.remove('notice__form--disabled');
     fieldSet.forEach(function (field) {
       field.disabled = false;
     });
   };
 
   var makePageInActive = function () {
-    window.map.queryMap.classList.add('map--faded');
-    window.form.noticeForm.classList.add('notice__form--disabled');
+    findMap.classList.add('map--faded');
+    window.form.find.classList.add('notice__form--disabled');
     fieldSet.forEach(function (field) {
       field.disabled = true;
     });
   };
 
   var onMapClick = function () {
-    if (window.map.queryMap.classList.contains('map--faded')) {
-      window.load('https://js.dump.academy/keksobooking/data', 'GET', '', onSuccess);
+    if (findMap.classList.contains('map--faded')) {
+      window.backend.request(BOOKINGS_URL, 'GET', '', onSuccess, window.form.onError);
       makePageActive();
       window.form.disableCapacity();
       window.form.makeMinPrice();
-      window.form.capacity.options[2].selected = true;
     }
 
     window.form.setAddress(false);
@@ -62,7 +56,7 @@
 
   var checkCoords = function (coords) {
     var minX = MAIN_PIN_OFFSET_X;
-    var maxX = document.querySelector('.map').offsetWidth - MAIN_PIN_OFFSET_X;
+    var maxX = findMap.offsetWidth - MAIN_PIN_OFFSET_X;
     var minY = MAIN_PIN_MIN_Y - MAIN_PIN_OFFSET_Y;
     var maxY = MAIN_PIN_MAX_Y - MAIN_PIN_OFFSET_Y;
 
@@ -131,11 +125,14 @@
   });
 
   window.map = {
-    queryMap: document.querySelector('.map'),
+    find: findMap,
     movePinToInitial: function () {
       window.form.mapPinMain.style.left = '';
       window.form.mapPinMain.style.top = '';
     },
-    makePageInActive: makePageInActive
+    makePageInActive: makePageInActive,
+    offers: function () {
+      return offers;
+    }
   };
 })();
