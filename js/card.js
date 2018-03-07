@@ -40,7 +40,7 @@
   };
 
   var renderCard = function (card) {
-    var adCardTemplate = document.querySelector('template').content.querySelector('.map__card');
+    var adCardTemplate = window.pin.template.content.querySelector('.map__card');
     var adCard = adCardTemplate.cloneNode(true);
     var popupFeatures = adCard.querySelector('.popup__features');
     var popupPictures = adCard.querySelector('.popup__pictures');
