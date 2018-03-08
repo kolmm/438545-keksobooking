@@ -66,6 +66,8 @@
     window.pin.removeAll();
     window.map.makePageInActive();
     disableCapacity();
+    window.avatar.clearPreview();
+    window.avatar.clearPhotos();
   };
 
   var addAttribute = function (element, name, value) {
