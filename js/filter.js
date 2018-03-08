@@ -2,6 +2,7 @@
 
 (function () {
   var MAX_PINS = 5;
+  var TIME_TO_DELETE_ERROR = 500;
   var PRICES_TO_COMPARE = {
     low: 10000,
     high: 50000
@@ -72,7 +73,7 @@
 
   findForm.addEventListener('change', function () {
     window.card.close();
-    window.debounce(updatePins(), 500);
+    window.debounce(updatePins(), TIME_TO_DELETE_ERROR);
   });
 
   window.filter = {

@@ -3,6 +3,7 @@
 (function () {
   var ESC_CLICK = 27;
   var SYMBOL_OF_RUBLE = String.fromCharCode(8381);
+  var PHOTO_HEIGHT = 40;
 
   var deleteChildren = function (el) {
     while (el.hasChildNodes()) {
@@ -27,7 +28,11 @@
 
     images.forEach(function (image) {
       var imageItem = document.createElement('li');
-      imageItem.innerHTML = '<img src="' + image + '" height="40">';
+      var imgInPicture = document.createElement('img');
+
+      imgInPicture.src = image;
+      imgInPicture.height = PHOTO_HEIGHT;
+      imageItem.appendChild(imgInPicture);
       fragment.appendChild(imageItem);
     });
 
@@ -35,7 +40,7 @@
   };
 
   var renderCard = function (card) {
-    var adCardTemplate = document.querySelector('template').content.querySelector('.map__card');
+    var adCardTemplate = window.pin.template.content.querySelector('.map__card');
     var adCard = adCardTemplate.cloneNode(true);
     var popupFeatures = adCard.querySelector('.popup__features');
     var popupPictures = adCard.querySelector('.popup__pictures');

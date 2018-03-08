@@ -7,6 +7,7 @@
   var PIN_HEIGHT = 70;
   var PIN_WIDTH_HALF = PIN_WIDTH / 2;
   var mapPins = document.querySelector('.map__pins');
+  var template = document.querySelector('template');
 
   var onPinClick = function (evt, pin) {
     var mapFiltersContainer = document.querySelector('.map__filters-container');
@@ -20,7 +21,7 @@
   };
 
   var makePin = function (pin) {
-    var pinTemplate = document.querySelector('template').content.querySelector('.map__pin');
+    var pinTemplate = template.content.querySelector('.map__pin');
     var mapPin = pinTemplate.cloneNode(true);
     var imgPin = mapPin.querySelector('img');
 
@@ -57,6 +58,7 @@
   };
 
   window.pin = {
+    template: template,
     removeAll: removePins,
     renderAll: renderPins
   };

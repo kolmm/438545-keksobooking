@@ -2,6 +2,16 @@
 
 (function () {
   var CREATE_BOOKING_URL = 'https://js.dump.academy/keksobooking';
+  var TIME_TO_DELETE_ERROR = 5000;
+  var TITLE_MIN_LENGTH = 30;
+  var TITLE_MAX_LENGTH = 100;
+  var PRICE_MAX = 1000000;
+  var PRICE_MIN_BUNGALO = 0;
+  var PRICE_MIN_FLAT = 1000;
+  var PRICE_MIN_HOUSE = 5000;
+  var PRICE_MIN_PALACE = 10000;
+  var PAGE_TOP_START = 0;
+  var PAGE_LEFT_START = 0;
   var noticeForm = document.querySelector('.notice__form');
   var title = noticeForm.querySelector('#title');
   var address = noticeForm.querySelector('#address');
@@ -19,10 +29,10 @@
     '100': ['0']
   };
   var typeToPrice = {
-    'bungalo': 0,
-    'flat': 1000,
-    'house': 5000,
-    'palace': 10000
+    'bungalo': PRICE_MIN_BUNGALO,
+    'flat': PRICE_MIN_FLAT,
+    'house': PRICE_MIN_HOUSE,
+    'palace': PRICE_MIN_PALACE
   };
 
   var setAddress = function (isInitial) {
@@ -49,13 +59,15 @@
 
   var makeOriginState = function () {
     noticeForm.reset();
-    price.min = 0;
-    price.placeholder = 5000;
+    price.min = PRICE_MIN_FLAT;
+    price.placeholder = PRICE_MIN_FLAT;
     window.map.movePinToInitial();
     window.card.close();
     window.pin.removeAll();
     window.map.makePageInActive();
     disableCapacity();
+    window.avatar.clearPreview();
+    window.avatar.clearPhotos();
   };
 
   var addAttribute = function (element, name, value) {
@@ -64,11 +76,11 @@
 
   title.required = true;
   price.required = true;
-  price.max = 1000000;
+  price.max = PRICE_MAX;
 
-  addAttribute(noticeForm, 'action', 'https://js.dump.academy/keksobooking');
-  addAttribute(title, 'minlength', 30);
-  addAttribute(title, 'maxlength', 100);
+  addAttribute(noticeForm, 'action', CREATE_BOOKING_URL);
+  addAttribute(title, 'minlength', TITLE_MIN_LENGTH);
+  addAttribute(title, 'maxlength', TITLE_MAX_LENGTH);
   addAttribute(address, 'readonly', true);
 
   type.addEventListener('change', function () {
@@ -108,12 +120,12 @@
 
     errorMessage.classList.add('error-message');
     errorMessage.textContent = 'Произошла ошибка:' + ' ' + response;
-    window.scrollTo(0, 0);
+    window.scrollTo(PAGE_TOP_START, PAGE_LEFT_START);
     document.body.insertAdjacentElement('afterbegin', errorMessage);
 
     window.debounce(function () {
       errorMessage.remove();
-    }, 5000);
+    }, TIME_TO_DELETE_ERROR);
   };
 
   noticeForm.addEventListener('submit', function (evt) {
