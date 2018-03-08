@@ -35,6 +35,7 @@
     img.draggable = true;
     img.style = 'margin: 2px;';
     img.style.display = 'inline-block';
+
     return img;
   };
 
